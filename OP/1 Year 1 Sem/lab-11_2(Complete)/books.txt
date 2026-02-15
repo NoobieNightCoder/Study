@@ -1,0 +1,24 @@
+The Pragmatic Programmer
+Andrew Hunt
+352
+1
+Clean Code
+Robert C. Martin
+464
+3
+Code Complete
+Steve McConnell
+914
+3
+C Programming Language
+Kernighan and Ritchie
+274
+5
+Design Patterns
+Gang of Four
+395
+5
+Introduction to Algorithms
+Thomas H. Cormen
+1312
+5

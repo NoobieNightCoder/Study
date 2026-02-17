@@ -1,12 +1,16 @@
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 
 #include "UI/menuFunctions.h"
+#include "shapes.h"
 
 using namespace std;
 
 int main() {
     bool exitFlag = false;
+
+    vector<Shapes> a;
 
     while(!exitFlag) {
         printMenu();

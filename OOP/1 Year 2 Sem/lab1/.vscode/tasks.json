@@ -32,6 +32,7 @@
                 "-g",
                 "${file}",
                 "${fileDirname}\\UI\\menuFunctions.cpp",
+                "${fileDirname}\\MainLogic\\shapes.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

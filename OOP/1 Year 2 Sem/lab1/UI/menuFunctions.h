@@ -29,9 +29,11 @@ const Menu menuList[] {
     { MENU_EXIT_PROGRAMM,            "Exit the program"                                                     }
 };
 
-int inputMenu();
+int itemInputMenu();
+std::string nameInputMenu();
+double floatInputMenu();
 
 void waitForInput();
 
 void printMenu();
-void addShapeMenu();
+int addShapeMenu();

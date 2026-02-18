@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+class Point;
+
 typedef enum {
     MENU_ADD_SHAPE              = 1,
     MENU_PRINT_LIST_PARAM       = 2,
@@ -13,12 +15,19 @@ typedef enum {
     MENU_EXIT_PROGRAMM          = 8
 } menuCodes;
 
+typedef enum {
+    CIRCLE      = 1,
+    RECTANGLE   = 2,
+    TRIANGLE    = 3
+} ShapesID;
+
+
 struct Menu {
     int id;
     std::string description;
 };
 
-const Menu menuList[] {
+const Menu mainMenu[] {
     { MENU_ADD_SHAPE,                "Add a shape to the shape collection"                                  },
     { MENU_PRINT_LIST_PARAM,         "Print a list of shapes with parameters"                               },
     { MENU_PRINT_LIST_PERIM,         "Print a list of shapes with perimeters"                               },
@@ -29,11 +38,30 @@ const Menu menuList[] {
     { MENU_EXIT_PROGRAMM,            "Exit the program"                                                     }
 };
 
-int itemInputMenu();
-std::string nameInputMenu();
-double floatInputMenu();
+const Menu shapeAddMenu[] {
+    { CIRCLE,       "Circle"    },
+    { RECTANGLE,    "Rectangle" },
+    { TRIANGLE,     "Triangle"  }
+};
 
 void waitForInput();
 
 void printMenu();
+
 int addShapeMenu();
+
+int itemInputMenu();
+std::string nameInputMenu();
+double radiusInputMenu();
+std::vector<Point> rectangleVerticesInputMenu();
+std::vector<Point> triangleVerticesInputMenu();
+
+void printParamsMenu();
+
+void printPerimsMenu();
+
+void printPerimSumMenu();
+
+void deleteShapeByIndexMenu();
+
+void deleteShapesByPerimMenu();

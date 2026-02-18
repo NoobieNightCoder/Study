@@ -33,6 +33,10 @@
                 "${file}",
                 "${fileDirname}\\UI\\menuFunctions.cpp",
                 "${fileDirname}\\MainLogic\\shapes.cpp",
+                "${fileDirname}\\MainLogic\\Visitor.cpp",
+                "${fileDirname}\\MainLogic\\ShapesClasses\\circle.cpp",
+                "${fileDirname}\\MainLogic\\ShapesClasses\\rectangle.cpp",
+                "${fileDirname}\\MainLogic\\ShapesClasses\\triangle.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

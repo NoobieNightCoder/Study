@@ -4,32 +4,13 @@
 
 #include "UI/menuFunctions.h"
 #include "MainLogic/shapes.h"
+#include "MainLogic/Visitor.h"
 
-typedef enum {
-    CIRCLE      = 1,
-    RECTANGLE   = 2,
-    TRIANGLE    = 3
-} ShapesID;
+#include "MainLogic/ShapesClasses/circle.h"
+#include "MainLogic/ShapesClasses/rectangle.h"
+#include "MainLogic/ShapesClasses/triangle.h"
 
 using namespace std;
-
-class PrintVisitor : public ShapeVisitor {
-private:
-    int index = 1;
-
-public:
-    void visit(const Circle &c) override {
-        cout << index++ << ". " << c.getName() << " (Circle)\t|\tPerimeter: " << c.perimeter() << endl;
-    }
-
-    void visit(const Rectangle &r) override {
-        cout << index++ << ". " << r.getName() << " (Rectangle)\t|\tPerimeter: " << r.perimeter() << endl;
-    }
-
-    void visit(const Triangle &t) override {
-        cout << index++ << ". " << t.getName() << " (Triangle)\t|\tPerimeter: " << t.perimeter() << endl;
-    }
-};
 
 int main() {
     vector<unique_ptr<Shape>> shapesList;
@@ -62,22 +43,6 @@ int main() {
 
                 cout << "Enter shape name: ";
                 cin >> name;
-                cout << "Enter 2 opposite vertices (x y):" << endl;
-
-                int counter = 1;
-                for (auto &p : vertices) {
-                    if(counter % 2 == 0) p = Point(0, 0);
-                    else {
-                        double x, y;
-                        cin >> x >> y;
-                        p = Point(x, y);
-                    }
-                    counter++;
-                }
-                
-                vertices[1] = Point(vertices[2].getX(), vertices[0].getY());
-                vertices[3] = Point(vertices[0].getX(), vertices[2].getY());
-
 
                 shapesList.push_back(make_unique<Rectangle>(name, vertices));
 
@@ -105,8 +70,13 @@ int main() {
         } else if (choise == MENU_PRINT_LIST_PERIM) {
             PrintVisitor printer;
             for(const auto &shape : shapesList)
-                shape->accept(printer);
-                waitForInput();
+                shape->askPerimeter(printer);
+            waitForInput();
+        } else if (choise == MENU_PRINT_LIST_PARAM) {
+            PrintVisitor printer;
+            for(const auto &shape : shapesList)
+                shape->askParameters(printer);
+            waitForInput();
         }
 
         else if (choise == MENU_EXIT_PROGRAMM)

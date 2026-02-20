@@ -1,9 +1,12 @@
 #include "app_controller.h"
 #include "../logic/logic.h"
 
-QString AppController::handleButtonClick(QString aboba)
+QString AppController::handleButtonClick(QString input, int modeFrom, int modeTo)
 {
-    std::string loh = aboba.toStdString();
-    const char* text = get_new_text(loh.c_str());
-    return QString::fromUtf8(text);
+    std::string convertedInput = input.toStdString();
+    char* text = convertNum(convertedInput.c_str(), modeFrom, modeTo);
+    QString result = QString::fromUtf8(text);
+
+    free(text);
+    return result;
 }

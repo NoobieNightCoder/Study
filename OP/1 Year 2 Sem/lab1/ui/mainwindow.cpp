@@ -25,13 +25,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::onConvertButtonClicked()
 {
-    int RadioState = 0;
-    if(ui->HEXToggleTo->isChecked()) RadioState = HEX;
-    if(ui->DECToggleTo->isChecked()) RadioState = DEC;
-    if(ui->BINToggleTo->isChecked()) RadioState = BIN;
+    int radioStateFrom = 0, radioStateTo = 0;
+    if(ui->HEXToggleTo->isChecked())      radioStateTo = HEX;
+    else if(ui->DECToggleTo->isChecked()) radioStateTo = DEC;
+    else if(ui->BINToggleTo->isChecked()) radioStateTo = BIN;
+
+    if(ui->HEXToggleFrom->isChecked())      radioStateFrom = HEX;
+    else if(ui->DECToggleFrom->isChecked()) radioStateFrom = DEC;
+    else if(ui->BINToggleFrom->isChecked()) radioStateFrom = BIN;
 
 
-    // QString aboba = ui->NumInput->text();
-    QString newText = controller.handleButtonClick(RadioState);
+    QString inputText = ui->NumInput->text();
+    QString newText = controller.handleButtonClick(inputText, radioStateFrom, radioStateTo);
     ui->OutputLabel->setText(newText);
 }

@@ -5,7 +5,7 @@
 
 class AppController {
 public:
-    QString handleButtonClick(QString);
+    QString handleButtonClick(QString, int, int);
 };
 
 #endif

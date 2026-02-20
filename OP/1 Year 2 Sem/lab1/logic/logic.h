@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-const char* get_new_text(const char* input);
+char* convertNum(const char*, int, int);
 
 #ifdef __cplusplus
 }

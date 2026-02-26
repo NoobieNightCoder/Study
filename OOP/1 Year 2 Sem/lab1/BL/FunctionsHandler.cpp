@@ -7,6 +7,10 @@
 
 #include "Shapes.h"
 
+#define ZERO 0
+#define ONE 1
+#define TWO 2
+
 using namespace std;
 
 // NEEDED FUNCTIONS //
@@ -28,16 +32,16 @@ bool isBlank(string &str) {
 double calcArea(vector<Point> vertices) {
     double result = 0;
     if(size(vertices) == TRIANGLE_VERTICES) {
-        double a = distance(vertices[0], vertices[1]);
-        double b = distance(vertices[1], vertices[2]);
-        double c = distance(vertices[2], vertices[0]);
+        double a = distance(vertices[ZERO], vertices[ONE]);
+        double b = distance(vertices[ONE], vertices[TWO]);
+        double c = distance(vertices[TWO], vertices[ZERO]);
 
         double p = (a + b + c) / 2.0;
 
         result = sqrt(p * (p - a) * (p - b) * (p - c));
     } else if (size(vertices) == RECTANGE_VERTICES) {
-        double a = distance(vertices[0], vertices[1]);
-        double b = distance(vertices[1], vertices[2]);
+        double a = distance(vertices[ZERO], vertices[ONE]);
+        double b = distance(vertices[ONE], vertices[TWO]);
 
         result = a * b;
     }

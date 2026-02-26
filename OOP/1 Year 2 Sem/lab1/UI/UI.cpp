@@ -64,7 +64,6 @@ int idInputMenu() {
 
 string nameInputMenu(int* errorCode) {
     string result = inputValue<string>(INPUT_NAME);
-    if(result.empty() || isBlank(result)) *errorCode = ERROR_BAD_NAME;
     return result;
 }
 

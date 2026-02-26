@@ -1,11 +1,28 @@
-#ifndef APP_CONTROLLER_H
-#define APP_CONTROLLER_H
+#pragma once
 
 #include <QString>
+#include "../logic/logic.h"
 
-class AppController {
+class AppController
+{
 public:
-    QString handleButtonClick(QString, int, int);
-};
+    AppController() = default;
 
-#endif
+    struct ConversionResponse
+    {
+        QString ResultText;
+        QString ErrorText;
+    };
+
+    ConversionResponse Convert(
+        const QString& InputText,
+        Base InputBase,
+        Base OutputBase);
+
+    bool SwapValues(
+        QString& InputText,
+        Base& InputBase,
+        QString& OutputText,
+        Base& OutputBase,
+        QString& ErrorText);
+};

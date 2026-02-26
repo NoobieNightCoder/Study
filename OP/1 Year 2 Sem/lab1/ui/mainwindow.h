@@ -18,9 +18,18 @@ public:
     ~MainWindow();
 
 private slots:
-    void onConvertButtonClicked();
+    void OnConvertClicked();
+    void OnSwapClicked();
 
 private:
     Ui::MainWindow *ui;
-    AppController controller;
+    AppController Controller;
+
+    Base GetInputBase() const;
+    Base GetOutputBase() const;
+    void SetInputBase(Base BaseValue);
+    void SetOutputBase(Base BaseValue);
+
+    void ShowError(const QString& ErrorMessage);
+    void ClearError();
 };

@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->ConvertButton, &QPushButton::clicked, this, &MainWindow::onConvertButtonClicked);
+    connect(ui->pushButton_convert, &QPushButton::clicked, this, &MainWindow::OnConvertClicked);
+    connect(ui->pushButton_swap, &QPushButton::clicked, this, &MainWindow::OnSwapClicked);
 }
 
 MainWindow::~MainWindow()
@@ -23,19 +24,77 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onConvertButtonClicked()
-{
-    int radioStateFrom = 0, radioStateTo = 0;
-    if(ui->HEXToggleTo->isChecked())      radioStateTo = HEX;
-    else if(ui->DECToggleTo->isChecked()) radioStateTo = DEC;
-    else if(ui->BINToggleTo->isChecked()) radioStateTo = BIN;
+Base MainWindow::GetInputBase() const {
+    if (ui->radioInputHex->isChecked()) return BASE_HEX;
+    if (ui->radioInputBin->isChecked()) return BASE_BIN;
+    return BASE_DEC;
+}
 
-    if(ui->HEXToggleFrom->isChecked())      radioStateFrom = HEX;
-    else if(ui->DECToggleFrom->isChecked()) radioStateFrom = DEC;
-    else if(ui->BINToggleFrom->isChecked()) radioStateFrom = BIN;
+Base MainWindow::GetOutputBase() const {
+    if (ui->radioOutputHex->isChecked()) return BASE_HEX;
+    if (ui->radioOutputBin->isChecked()) return BASE_BIN;
+    return BASE_DEC;
+}
 
+void MainWindow::SetInputBase(Base BaseValue) {
+    ui->radioInputHex->setChecked(BaseValue == BASE_HEX);
+    ui->radioInputDec->setChecked(BaseValue == BASE_DEC);
+    ui->radioInputBin->setChecked(BaseValue == BASE_BIN);
+}
 
-    QString inputText = ui->NumInput->text();
-    QString newText = controller.handleButtonClick(inputText, radioStateFrom, radioStateTo);
-    ui->OutputLabel->setText(newText);
+void MainWindow::SetOutputBase(Base BaseValue) {
+    ui->radioOutputHex->setChecked(BaseValue == BASE_HEX);
+    ui->radioOutputDec->setChecked(BaseValue == BASE_DEC);
+    ui->radioOutputBin->setChecked(BaseValue == BASE_BIN);
+}
+
+void MainWindow::ShowError(const QString& ErrorMessage) {
+    ui->label_error->setText(ErrorMessage);
+}
+
+void MainWindow::ClearError() {
+    ui->label_error->clear();
+}
+
+void MainWindow::OnConvertClicked() {
+    ClearError();
+
+    QString InputText = ui->lineEdit_input->text();
+    Base InputBase = GetInputBase();
+    Base OutputBase = GetOutputBase();
+
+    auto Response = Controller.Convert(InputText, InputBase, OutputBase);
+
+    if (!Response.ErrorText.isEmpty()) {
+        ShowError(Response.ErrorText);
+        ui->lineEdit_output->clear();
+        return;
+    }
+
+    ui->lineEdit_output->setText(Response.ResultText);
+}
+
+void MainWindow::OnSwapClicked() {
+    ClearError();
+
+    QString InputText = ui->lineEdit_input->text();
+    QString OutputText = ui->lineEdit_output->text();
+    Base InputBase = GetInputBase();
+    Base OutputBase = GetOutputBase();
+
+    QString ErrorText;
+
+    bool Success =
+        Controller.SwapValues(InputText, InputBase, OutputText, OutputBase, ErrorText);
+
+    if (!Success) {
+        ShowError(ErrorText);
+        return;
+    }
+
+    ui->lineEdit_input->setText(InputText);
+    ui->lineEdit_output->setText(OutputText);
+
+    SetInputBase(InputBase);
+    SetOutputBase(OutputBase);
 }

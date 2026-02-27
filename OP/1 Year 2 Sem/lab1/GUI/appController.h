@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QString>
-#include "../logic/logic.h"
+#include "../BL/conversionMain.h"
 
 class AppController
 {

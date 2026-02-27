@@ -1,6 +1,5 @@
-#include "app_controller.h"
+#include "appController.h"
 
-#include "../logic/logic.h"
 #include <QByteArray>
 #include <cstdlib>
 #include <cstring>
@@ -11,7 +10,7 @@ AppController::ConversionResponse AppController::Convert(const QString& InputTex
     QByteArray InputBytes = InputText.toUtf8();
     const char* InputCString = InputBytes.constData();
 
-    ConversionResult* LogicResult = logic_convert(InputCString, InputBase, OutputBase);
+    ConversionResult* LogicResult = logicConvert(InputCString, InputBase, OutputBase);
 
     if (!LogicResult) {
         Response.ErrorText = "Внутренняя ошибка памяти.";
@@ -57,7 +56,7 @@ bool AppController::SwapValues(QString& InputText, Base& InputBase, QString& Out
 
     char* SwapError = nullptr;
 
-    int Result = logic_swap(&InputCString, &InputBase, &OutputCString, &OutputBase, &SwapError);
+    int Result = logicSwap(&InputCString, &InputBase, &OutputCString, &OutputBase, &SwapError);
 
     if (Result != 0) {
         if (SwapError) {

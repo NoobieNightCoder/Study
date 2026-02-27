@@ -15,16 +15,20 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
 add_library(core_logic STATIC
-    logic/logic.c
+    BL/conversionMain.c
+    BL/errorHandler.c
+    BL/stringUtils.c
+    BL/numberParser.c
+    BL/numberFormatter.c
 )
 
 qt_add_executable(lab1
-    ui/main.cpp
-    ui/app_controller.cpp
-    ui/app_controller.h
-    ui/mainwindow.cpp
-    ui/mainwindow.h
-    ui/mainwindow.ui
+    GUI/main.cpp
+    GUI/appController.cpp
+    GUI/appController.h
+    GUI/mainwindow.cpp
+    GUI/mainwindow.h
+    GUI/mainwindow.ui
 )
 
 target_link_libraries(lab1 PRIVATE

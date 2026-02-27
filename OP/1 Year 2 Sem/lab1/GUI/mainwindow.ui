@@ -34,7 +34,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label_title">
+     <widget class="QLabel" name="labelTitle">
       <property name="text">
        <string>Конвертер систем счисления</string>
       </property>
@@ -51,7 +51,7 @@
       <item>
        <layout class="QVBoxLayout" name="inputColumn">
         <item>
-         <widget class="QLabel" name="label_input">
+         <widget class="QLabel" name="labelInput">
           <property name="text">
            <string>Ввод (число):</string>
           </property>
@@ -109,7 +109,7 @@
       <item>
        <layout class="QVBoxLayout" name="outputColumn">
         <item>
-         <widget class="QLabel" name="label_output">
+         <widget class="QLabel" name="labelOutput">
           <property name="text">
            <string>Результат:</string>
           </property>
@@ -181,7 +181,7 @@
        <widget class="QFrame" name="actionButtonsFrame">
         <layout class="QHBoxLayout" name="layout_actionButtons">
          <item>
-          <widget class="QPushButton" name="pushButton_swap" native="true">
+          <widget class="QPushButton" name="pushButton_swap">
            <property name="minimumSize">
             <size>
              <width>64</width>
@@ -191,7 +191,7 @@
            <property name="toolTip">
             <string>Поменять системы и значения местами</string>
            </property>
-           <property name="text" stdset="0">
+           <property name="text">
             <string>&lt;--&gt;</string>
            </property>
           </widget>
@@ -231,7 +231,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QLabel" name="label_error">
+     <widget class="QLabel" name="labelError">
       <property name="styleSheet">
        <string>color: #cc0000; font-weight: 600;</string>
       </property>
@@ -270,13 +270,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QPushButton</class>
-   <extends>QWidget</extends>
-   <header>qpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

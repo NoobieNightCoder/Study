@@ -25,15 +25,27 @@ MainWindow::~MainWindow()
 }
 
 Base MainWindow::GetInputBase() const {
-    if (ui->radioInputHex->isChecked()) return BASE_HEX;
-    if (ui->radioInputBin->isChecked()) return BASE_BIN;
-    return BASE_DEC;
+    Base InputBase = BASE_DEC;
+
+    if (ui->radioInputHex->isChecked()) {
+        InputBase = BASE_HEX;
+    } else if (ui->radioInputBin->isChecked()) {
+        InputBase = BASE_BIN;
+    }
+
+    return InputBase;
 }
 
 Base MainWindow::GetOutputBase() const {
-    if (ui->radioOutputHex->isChecked()) return BASE_HEX;
-    if (ui->radioOutputBin->isChecked()) return BASE_BIN;
-    return BASE_DEC;
+    Base OutputBase = BASE_DEC;
+
+    if (ui->radioOutputHex->isChecked()) {
+        OutputBase = BASE_HEX;
+    } else if (ui->radioOutputBin->isChecked()) {
+        OutputBase = BASE_BIN;
+    }
+
+    return OutputBase;
 }
 
 void MainWindow::SetInputBase(Base BaseValue) {
@@ -49,11 +61,11 @@ void MainWindow::SetOutputBase(Base BaseValue) {
 }
 
 void MainWindow::ShowError(const QString& ErrorMessage) {
-    ui->label_error->setText(ErrorMessage);
+    ui->labelError->setText(ErrorMessage);
 }
 
 void MainWindow::ClearError() {
-    ui->label_error->clear();
+    ui->labelError->clear();
 }
 
 void MainWindow::OnConvertClicked() {
@@ -68,10 +80,9 @@ void MainWindow::OnConvertClicked() {
     if (!Response.ErrorText.isEmpty()) {
         ShowError(Response.ErrorText);
         ui->lineEdit_output->clear();
-        return;
+    } else {
+        ui->lineEdit_output->setText(Response.ResultText);
     }
-
-    ui->lineEdit_output->setText(Response.ResultText);
 }
 
 void MainWindow::OnSwapClicked() {
@@ -89,12 +100,11 @@ void MainWindow::OnSwapClicked() {
 
     if (!Success) {
         ShowError(ErrorText);
-        return;
+    } else {
+        ui->lineEdit_input->setText(InputText);
+        ui->lineEdit_output->setText(OutputText);
+
+        SetInputBase(InputBase);
+        SetOutputBase(OutputBase);
     }
-
-    ui->lineEdit_input->setText(InputText);
-    ui->lineEdit_output->setText(OutputText);
-
-    SetInputBase(InputBase);
-    SetOutputBase(OutputBase);
 }

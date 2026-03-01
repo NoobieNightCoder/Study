@@ -1,66 +1,134 @@
 #include "Shapes.h"
-#include <string>
-#include <vector>
+
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
-// BASIC CONSTS | FUNCTIONS //
+namespace {
+    class GeometryCalculator {
+    public:
+        static double twoFactor() {
+            double factor = 1.0 + 1.0;
+            return factor;
+        }
 
-const double PI = atan(1) * 4;
+        static double getPi() {
+            double piValue = acos(-1.0);
+            return piValue;
+        }
 
-static double distance(const Point &a, const Point &b) {
-    return sqrt(
-        (a.getX() - b.getX()) * (a.getX() - b.getX()) +
-        (a.getY() - b.getY()) * (a.getY() - b.getY())
-    );
+        static double distance(const Point& first, const Point& second) {
+            double deltaX = first.getX() - second.getX();
+            double deltaY = first.getY() - second.getY();
+            double distanceValue = sqrt(deltaX * deltaX + deltaY * deltaY);
+            return distanceValue;
+        }
+
+        static double polygonPerimeter(const vector<Point>& vertices) {
+            double perimeter = 0;
+            size_t index = 0;
+
+            while (index < vertices.size()) {
+                size_t nextIndex = (index + 1) % vertices.size();
+                perimeter += distance(vertices[index], vertices[nextIndex]);
+                index += 1;
+            }
+
+            return perimeter;
+        }
+    };
 }
 
-static double calcRectAndTriPerim(vector<Point> vertices) {
-    double p = 0;
-    for (size_t i = 0; i < vertices.size(); i++)
-        p += distance(vertices[i], vertices[(i + 1) % vertices.size()]);
-    return p;
-}
-
-// POINT CLASS FOR COORDS //
+// POINT //
 
 Point::Point() : x(0), y(0) {}
-Point::Point(double x, double y) : x(x), y(y) {}
 
-double Point::getX() const { return x; }
-double Point::getY() const { return y; }
+Point::Point(double xValue, double yValue) : x(xValue), y(yValue) {}
+
+double Point::getX() const {
+    double result = x;
+    return result;
+}
+
+double Point::getY() const {
+    double result = y;
+    return result;
+}
 
 // CIRCLE //
 
-Circle::Circle(string n, Point c, double r) : name(n), centre(c), radius(r) {}
+Circle::Circle(const string& shapeName, const Point& shapeCentre, double shapeRadius)
+    : name(shapeName), centre(shapeCentre), radius(shapeRadius) {}
 
-string Circle::getName()      const { return name;            }
-string Circle::getTypeName()  const { return "Circle";        }
+string Circle::getName() const {
+    string result = name;
+    return result;
+}
 
-Point Circle::getCentre()     const { return centre;          }
+double Circle::getPerimeter() const {
+    double perimeter = GeometryCalculator::twoFactor() * GeometryCalculator::getPi() * radius;
+    return perimeter;
+}
 
-double Circle::getPerimeter() const { return 2 * PI * radius; }
-double Circle::getRadius()    const { return radius;          }
+void Circle::accept(ShapeVisitor& visitor) const {
+    visitor.visitCircle(*this);
+}
+
+Point Circle::getCentre() const {
+    Point result = centre;
+    return result;
+}
+
+double Circle::getRadius() const {
+    double result = radius;
+    return result;
+}
 
 // RECTANGLE //
 
-Rectangle::Rectangle(string n, vector<Point> v) : name(n), vertices(v) {}
+Rectangle::Rectangle(const string& shapeName, const vector<Point>& shapeVertices)
+    : name(shapeName), vertices(shapeVertices) {}
 
-string Rectangle::getName()            const { return name;        }
-string Rectangle::getTypeName()        const { return "Rectangle"; }
+string Rectangle::getName() const {
+    string result = name;
+    return result;
+}
 
-vector<Point> Rectangle::getVertices() const { return vertices;    }
+double Rectangle::getPerimeter() const {
+    double perimeter = GeometryCalculator::polygonPerimeter(vertices);
+    return perimeter;
+}
 
-double Rectangle::getPerimeter()       const { return calcRectAndTriPerim(vertices); }
+void Rectangle::accept(ShapeVisitor& visitor) const {
+    visitor.visitRectangle(*this);
+}
+
+vector<Point> Rectangle::getVertices() const {
+    vector<Point> result = vertices;
+    return result;
+}
 
 // TRIANGLE //
 
-Triangle::Triangle(string n, vector<Point> v) : name(n), vertices(v) {}
+Triangle::Triangle(const string& shapeName, const vector<Point>& shapeVertices)
+    : name(shapeName), vertices(shapeVertices) {}
 
-string Triangle::getName()            const { return name;       }
-string Triangle::getTypeName()        const { return "Triangle"; }
+string Triangle::getName() const {
+    string result = name;
+    return result;
+}
 
-vector<Point> Triangle::getVertices() const { return vertices;   }
+double Triangle::getPerimeter() const {
+    double perimeter = GeometryCalculator::polygonPerimeter(vertices);
+    return perimeter;
+}
 
-double Triangle::getPerimeter()       const { return calcRectAndTriPerim(vertices); }
+void Triangle::accept(ShapeVisitor& visitor) const {
+    visitor.visitTriangle(*this);
+}
+
+vector<Point> Triangle::getVertices() const {
+    vector<Point> result = vertices;
+    return result;
+}

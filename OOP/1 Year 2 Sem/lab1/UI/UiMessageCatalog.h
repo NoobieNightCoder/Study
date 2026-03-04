@@ -10,46 +10,47 @@ struct MenuItem {
 
 enum class MainMenuId {
     addShape = 1,
-    printListParameters = 2,
-    printListPerimeters = 3,
-    printPerimeterSum = 4,
-    sortShapes = 5,
-    deleteShape = 6,
-    deleteShapesByPerimeter = 7,
-    exitProgram = 8
+    printListParameters,
+    printListPerimeters,
+    printPerimeterSum,
+    sortShapes,
+    deleteShape,
+    deleteShapesByPerimeter,
+    exitProgram
 };
 
 enum class ShapeMenuId {
     circle = 1,
-    rectangle = 2,
-    triangle = 3
+    rectangle,
+    triangle
 };
 
 enum class UiMessageId {
-    shapeAdded = 0,
-    sumPerimeters = 1,
-    listSorted = 2,
-    shapeDeleted = 3,
-    shapesDeleted = 4,
-    chooseShapeToAdd = 5,
-    appTitle = 6
+    shapeAdded,
+    sumPerimeters,
+    listSorted,
+    shapeDeleted,
+    shapesDeleted,
+    chooseShapeToAdd,
+    appTitle
 };
 
 enum class UiErrorId {
-    incorrectInput = 0,
-    badItem = 1,
-    emptyList = 2,
-    badName = 3,
-    badRadius = 4,
-    badShape = 5,
-    badId = 6,
-    badPerimeterThreshold = 7
+    incorrectInput,
+    badItem,
+    emptyList,
+    badName,
+    badRadius,
+    badShape,
+    badId,
+    badPerimeterThreshold
 };
 
 class UiMessageCatalog final {
 public:
     static const std::vector<MenuItem>& getMainMenuItems();
     static const std::vector<MenuItem>& getShapeMenuItems();
+
     static const std::string& getMessage(UiMessageId messageId);
     static const std::string& getError(UiErrorId errorId);
 

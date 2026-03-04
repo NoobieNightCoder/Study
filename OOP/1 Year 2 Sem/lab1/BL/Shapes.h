@@ -7,8 +7,8 @@
 #include "ShapeVisitor.h"
 
 namespace shapeConstants {
-constexpr std::size_t triangleVertexCount = 3;
-constexpr std::size_t rectangleVertexCount = 4;
+    const std::size_t triangleVertexCount = 3;
+    const std::size_t rectangleVertexCount = 4;
 }
 
 class Point {

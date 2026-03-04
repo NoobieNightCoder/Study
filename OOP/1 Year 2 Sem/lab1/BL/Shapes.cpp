@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// LOCAL CLASS FOR CALCULATIONS //
+
 namespace {
     class GeometryCalculator {
     public:

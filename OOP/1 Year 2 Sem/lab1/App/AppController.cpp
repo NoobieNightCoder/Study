@@ -152,6 +152,7 @@ void AppController::deleteShapeMenu() {
     bool hasShapes = !shapeService.isEmpty();
     int errorCode = ui.noError();
 
+    
     if (hasShapes) {
         int shapeId = ui.readShapeId();
         ServiceError serviceError = shapeService.deleteById(shapeId);
@@ -186,21 +187,21 @@ void AppController::deleteShapesByPerimMenu() {
         shapeService.deleteByPerimeter(limit);
         ui.printMessage(UiMessageId::shapesDeleted);
     } else {
-        ui.printError((UiErrorId)(errorCode));
+        ui.printError((UiErrorId)errorCode);
     }
 }
 
 void AppController::run() {
     bool shouldContinue = true;
     unordered_map<int, function<void()>> menuHandlers {
-        {(int)(MainMenuId::addShape), [this]() { addShapeMenu(); }},
-        {(int)(MainMenuId::printListParameters), [this]() { listParamMenu(); }},
-        {(int)(MainMenuId::printListPerimeters), [this]() { listPerimMenu(); }},
-        {(int)(MainMenuId::printPerimeterSum), [this]() { sumPerimMenu(); }},
-        {(int)(MainMenuId::sortShapes), [this]() { sortListMenu(); }},
-        {(int)(MainMenuId::deleteShape), [this]() { deleteShapeMenu(); }},
-        {(int)(MainMenuId::deleteShapesByPerimeter), [this]() { deleteShapesByPerimMenu(); }},
-        {(int)(MainMenuId::exitProgram), [&shouldContinue]() { shouldContinue = false; }}
+        {(int)MainMenuId::addShape,                   [this]() { addShapeMenu(); }                    },
+        {(int)MainMenuId::printListParameters,        [this]() { listParamMenu(); }                   },
+        {(int)MainMenuId::printListPerimeters,        [this]() { listPerimMenu(); }                   },
+        {(int)MainMenuId::printPerimeterSum,          [this]() { sumPerimMenu(); }                    },
+        {(int)MainMenuId::sortShapes,                 [this]() { sortListMenu(); }                    },
+        {(int)MainMenuId::deleteShape,                [this]() { deleteShapeMenu(); }                 },
+        {(int)MainMenuId::deleteShapesByPerimeter,    [this]() { deleteShapesByPerimMenu(); }         },
+        {(int)MainMenuId::exitProgram,                [&shouldContinue]() { shouldContinue = false; } }
     };
 
     while (shouldContinue) {

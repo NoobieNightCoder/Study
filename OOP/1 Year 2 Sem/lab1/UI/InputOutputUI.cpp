@@ -34,8 +34,7 @@ void InputOutputUI::printMessage(UiMessageId messageId, double value) const {
 }
 
 void InputOutputUI::printError(UiErrorId errorId) const {
-    int errorCode = static_cast<int>(errorId);
-    cout << "Error " << errorCode << ": " << UiMessageCatalog::getError(errorId) << endl;
+    cout << "Error " << (int)errorId << ": " << UiMessageCatalog::getError(errorId) << endl;
 }
 
 void InputOutputUI::printShapeLine(int index, const string& line) const {
@@ -56,9 +55,8 @@ string InputOutputUI::readName(int& errorCode) const {
     string name = readValue<string>(UiMessageCatalog::getNamePrompt());
     bool hasError = name.empty();
 
-    if (hasError) {
-        errorCode = static_cast<int>(UiErrorId::badName);
-    }
+    if (hasError)
+        errorCode = (int)UiErrorId::badName;
 
     return name;
 }
@@ -68,7 +66,7 @@ double InputOutputUI::readRadius(int& errorCode) const {
     bool hasError = radius <= 0;
 
     if (hasError) {
-        errorCode = static_cast<int>(UiErrorId::badRadius);
+        errorCode = (int)UiErrorId::badRadius;
     }
 
     return radius;
@@ -79,7 +77,7 @@ double InputOutputUI::readPerimeterThreshold(int& errorCode) const {
     bool hasError = threshold <= 0;
 
     if (hasError) {
-        errorCode = static_cast<int>(UiErrorId::badPerimeterThreshold);
+        errorCode = (int)UiErrorId::badPerimeterThreshold;
     }
 
     return threshold;

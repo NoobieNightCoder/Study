@@ -5,14 +5,14 @@
 using namespace std;
 
 namespace {
-const string circleLabel    = "Circle";
-const string rectangleLabel = "Rectangle";
-const string triangleLabel  = "Triangle";
-const string radiusLabel    = "Radius: ";
-const string centerLabel    = "Center: ";
-const string verticesLabel  = "Vertices: ";
-const string perimeterLabel = "Perimeter: ";
-const string separator      = " | ";
+    const string circleLabel    = "Circle";
+    const string rectangleLabel = "Rectangle";
+    const string triangleLabel  = "Triangle";
+    const string radiusLabel    = "Radius: ";
+    const string centerLabel    = "Center: ";
+    const string verticesLabel  = "Vertices: ";
+    const string perimeterLabel = "Perimeter: ";
+    const string separator      = " | ";
 }
 
 const string& ShapeTextCatalog::getCircleLabel() {

@@ -5,47 +5,40 @@
 #include <memory>
 #include <vector>
 
+#define ONE 1
+#define TWO 2
+#define THREE 3
+
 using namespace std;
 
 namespace {
-class ShapeMath final {
-public:
-    static double halfFactor() {
-        double factor = 0.5;
-        return factor;
-    }
+    class ShapeMath final {
+    public:
 
-    static double distance(const Point& first, const Point& second) {
-        double deltaX = first.getX() - second.getX();
-        double deltaY = first.getY() - second.getY();
-        double value = sqrt(deltaX * deltaX + deltaY * deltaY);
-        return value;
-    }
+        static double distance(const Point& first, const Point& second) {
+            double deltaX = first.getX() - second.getX();
+            double deltaY = first.getY() - second.getY();
+            double value = sqrt(deltaX * deltaX + deltaY * deltaY);
+            return value;
+        }
 
-    static double triangleArea(const vector<Point>& vertices) {
-        constexpr size_t firstPoint = 0;
-        constexpr size_t secondPoint = 1;
-        constexpr size_t thirdPoint = secondPoint + 1;
+        static double triangleArea(const vector<Point>& vertices) {
+            double firstSide = distance(vertices[ONE], vertices[TWO]);
+            double secondSide = distance(vertices[TWO], vertices[THREE]);
+            double thirdSide = distance(vertices[THREE], vertices[ONE]);
+            double semiperimeter = (firstSide + secondSide + thirdSide) / TWO;
+            double area = sqrt(semiperimeter * (semiperimeter - firstSide) *
+                (semiperimeter - secondSide) * (semiperimeter - thirdSide));
+            return area;
+        }
 
-        double firstSide = distance(vertices[firstPoint], vertices[secondPoint]);
-        double secondSide = distance(vertices[secondPoint], vertices[thirdPoint]);
-        double thirdSide = distance(vertices[thirdPoint], vertices[firstPoint]);
-        double semiperimeter = (firstSide + secondSide + thirdSide) * halfFactor();
-        double area = sqrt(semiperimeter * (semiperimeter - firstSide) *
-            (semiperimeter - secondSide) * (semiperimeter - thirdSide));
-        return area;
-    }
-
-    static double rectangleArea(const vector<Point>& vertices) {
-        constexpr size_t firstPoint = 0;
-        constexpr size_t secondPoint = 1;
-        constexpr size_t thirdPoint = secondPoint + 1;
-        double firstSide = distance(vertices[firstPoint], vertices[secondPoint]);
-        double secondSide = distance(vertices[secondPoint], vertices[thirdPoint]);
-        double area = firstSide * secondSide;
-        return area;
-    }
-};
+        static double rectangleArea(const vector<Point>& vertices) {
+            double firstSide = distance(vertices[ONE], vertices[TWO]);
+            double secondSide = distance(vertices[TWO], vertices[THREE]);
+            double area = firstSide * secondSide;
+            return area;
+        }
+    };
 }
 
 const vector<unique_ptr<Shape>>& ShapeService::getShapes() const {

@@ -27,11 +27,10 @@ MainWindow::~MainWindow()
 Base MainWindow::GetInputBase() const {
     Base InputBase = BASE_DEC;
 
-    if (ui->radioInputHex->isChecked()) {
+    if (ui->radioInputHex->isChecked())
         InputBase = BASE_HEX;
-    } else if (ui->radioInputBin->isChecked()) {
+    else if (ui->radioInputBin->isChecked())
         InputBase = BASE_BIN;
-    }
 
     return InputBase;
 }
@@ -39,11 +38,10 @@ Base MainWindow::GetInputBase() const {
 Base MainWindow::GetOutputBase() const {
     Base OutputBase = BASE_DEC;
 
-    if (ui->radioOutputHex->isChecked()) {
+    if (ui->radioOutputHex->isChecked())
         OutputBase = BASE_HEX;
-    } else if (ui->radioOutputBin->isChecked()) {
+    else if (ui->radioOutputBin->isChecked())
         OutputBase = BASE_BIN;
-    }
 
     return OutputBase;
 }
@@ -80,9 +78,8 @@ void MainWindow::OnConvertClicked() {
     if (!Response.ErrorText.isEmpty()) {
         ShowError(Response.ErrorText);
         ui->lineEdit_output->clear();
-    } else {
+    } else
         ui->lineEdit_output->setText(Response.ResultText);
-    }
 }
 
 void MainWindow::OnSwapClicked() {
@@ -98,9 +95,9 @@ void MainWindow::OnSwapClicked() {
     bool Success =
         Controller.SwapValues(InputText, InputBase, OutputText, OutputBase, ErrorText);
 
-    if (!Success) {
+    if (!Success)
         ShowError(ErrorText);
-    } else {
+    else {
         ui->lineEdit_input->setText(InputText);
         ui->lineEdit_output->setText(OutputText);
 

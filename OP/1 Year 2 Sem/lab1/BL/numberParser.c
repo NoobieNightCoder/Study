@@ -12,19 +12,8 @@ enum {
     BASE_PREFIX_LENGTH = 2
 };
 
-#define MAX_HEX_DIGITS_COUNT ((size_t)(sizeof(uint32_t) * HEX_DIGITS_PER_BYTE))
+#define MAX_HEX_DIGITS_COUNT    ((size_t)(sizeof(uint32_t) * HEX_DIGITS_PER_BYTE))
 #define MAX_BINARY_DIGITS_COUNT ((size_t)(sizeof(uint32_t) * CHAR_BIT))
-#define SIGN_PLUS ('+')
-#define SIGN_MINUS ('-')
-#define STRING_TERMINATOR ('\0')
-#define HEX_PREFIX_FIRST_CHAR ('0')
-#define HEX_PREFIX_SECOND_CHAR_LOWER ('x')
-#define HEX_PREFIX_SECOND_CHAR_UPPER ('X')
-#define BIN_PREFIX_FIRST_CHAR ('0')
-#define BIN_PREFIX_SECOND_CHAR_LOWER ('b')
-#define BIN_PREFIX_SECOND_CHAR_UPPER ('B')
-#define BINARY_DIGIT_ZERO ('0')
-#define BINARY_DIGIT_ONE ('1')
 
 typedef struct {
     unsigned long maxUnsignedInt32;
@@ -40,7 +29,7 @@ static int parseDecimal(const char* text, int32_t* outputValue, errorID* errorCo
     char* endPointer = NULL;
     long long parsedValue = 0;
 
-    if (!text || *text == STRING_TERMINATOR) {
+    if (!text || *text == '\0') {
         parseStatus = -1;
         *errorCode = ERROR_EMPTY_INPUT;
     }
@@ -56,19 +45,16 @@ static int parseDecimal(const char* text, int32_t* outputValue, errorID* errorCo
     }
 
     if (parseStatus == 0) {
-        while (*endPointer && isspace((unsigned char)*endPointer)) {
-            endPointer++;
-        }
+        while (*endPointer && isspace((unsigned char)*endPointer)) endPointer++;
 
-        if (*endPointer != STRING_TERMINATOR) {
+        if (*endPointer != '\0') {
             parseStatus = -1;
             *errorCode = ERROR_DEC_INCORRECT_INPUT;
         }
     }
 
-    if (parseStatus == 0) {
+    if (parseStatus == 0)
         *outputValue = (int32_t)parsedValue;
-    }
 
     return parseStatus;
 }
@@ -78,30 +64,26 @@ static int parseHexadecimal(const char* text, int32_t* outputValue, errorID* err
     const char* cursor = text;
     int isNegative = 0;
     size_t digitCount = 0;
-    unsigned long parsedValue = 0UL;
-    HexParseLimits limits = { (unsigned long)UINT32_MAX, (unsigned long)INT32_MAX + 1UL };
+    unsigned long parsedValue = 0;
+    HexParseLimits limits = { (unsigned long)UINT32_MAX, (unsigned long)INT32_MAX + 1 };
 
-    if (!text || *text == STRING_TERMINATOR) {
+    if (!text || *text == '\0') {
         parseStatus = -1;
         *errorCode = ERROR_EMPTY_INPUT;
     }
 
     if (parseStatus == 0) {
-        if (*cursor == SIGN_PLUS || *cursor == SIGN_MINUS) {
-            if (*cursor == SIGN_MINUS) {
-                isNegative = 1;
-            }
+        if (*cursor == '+' || *cursor == '-') {
+            if (*cursor == '-') isNegative = 1;
             cursor++;
         }
     }
 
     if (parseStatus == 0) {
-        if (cursor[0] == HEX_PREFIX_FIRST_CHAR &&
-            (cursor[1] == HEX_PREFIX_SECOND_CHAR_LOWER || cursor[1] == HEX_PREFIX_SECOND_CHAR_UPPER)) {
+        if (cursor[0] == '0' && (cursor[1] == 'x' || cursor[1] == 'X'))
             cursor += BASE_PREFIX_LENGTH;
-        }
 
-        if (*cursor == STRING_TERMINATOR) {
+        if (*cursor == '\0') {
             parseStatus = -1;
             *errorCode = ERROR_EMPTY_INPUT;
         }
@@ -140,12 +122,8 @@ static int parseHexadecimal(const char* text, int32_t* outputValue, errorID* err
             if (parsedValue > limits.maxNegativeMagnitude) {
                 parseStatus = -1;
                 *errorCode = ERROR_FOUR_BYTE_NEGATIVE_LIMIT;
-            } else {
-                *outputValue = -(int32_t)parsedValue;
-            }
-        } else {
-            *outputValue = (int32_t)((uint32_t)parsedValue);
-        }
+            } else *outputValue = -(int32_t)parsedValue;
+        } else *outputValue = (uint32_t)parsedValue;
     }
 
     return parseStatus;
@@ -156,30 +134,28 @@ static int parseBinary(const char* text, int32_t* outputValue, errorID* errorCod
     const char* cursor = text;
     int isNegative = 0;
     size_t digitCount = 0;
-    uint32_t accumulator = 0U;
-    BinaryParseLimits limits = { (uint32_t)INT32_MAX + 1U };
+    uint32_t accumulator = 0;
+    BinaryParseLimits limits = { (uint32_t)INT32_MAX + 1 };
 
-    if (!text || *text == STRING_TERMINATOR) {
+    if (!text || *text == '\0') {
         parseStatus = -1;
         *errorCode = ERROR_EMPTY_INPUT;
     }
 
     if (parseStatus == 0) {
-        if (*cursor == SIGN_PLUS || *cursor == SIGN_MINUS) {
-            if (*cursor == SIGN_MINUS) {
-                isNegative = 1;
-            }
+        if (*cursor == '+' || *cursor == '-') {
+            if (*cursor == '-') isNegative = 1;
             cursor++;
         }
     }
 
     if (parseStatus == 0) {
-        if (cursor[0] == BIN_PREFIX_FIRST_CHAR &&
-            (cursor[1] == BIN_PREFIX_SECOND_CHAR_LOWER || cursor[1] == BIN_PREFIX_SECOND_CHAR_UPPER)) {
+        if (cursor[0] == '0' &&
+            (cursor[1] == 'b' || cursor[1] == 'B')) {
             cursor += BASE_PREFIX_LENGTH;
         }
 
-        if (*cursor == STRING_TERMINATOR) {
+        if (*cursor == '\0') {
             parseStatus = -1;
             *errorCode = ERROR_EMPTY_INPUT;
         }
@@ -187,11 +163,11 @@ static int parseBinary(const char* text, int32_t* outputValue, errorID* errorCod
 
     if (parseStatus == 0) {
         while (*cursor && parseStatus == 0) {
-            if (*cursor != BINARY_DIGIT_ZERO && *cursor != BINARY_DIGIT_ONE) {
+            if (*cursor != '0' && *cursor != '1') {
                 parseStatus = -1;
                 *errorCode = ERROR_BIN_INCORRECT_INPUT;
             } else {
-                accumulator = (accumulator << 1) | (uint32_t)(*cursor - BINARY_DIGIT_ZERO);
+                accumulator = (accumulator << 1) | (uint32_t)(*cursor - '0');
                 digitCount++;
                 cursor++;
             }
@@ -208,12 +184,8 @@ static int parseBinary(const char* text, int32_t* outputValue, errorID* errorCod
             if (accumulator > limits.maxNegativeMagnitude) {
                 parseStatus = -1;
                 *errorCode = ERROR_FOUR_BYTE_NEGATIVE_LIMIT;
-            } else {
-                *outputValue = -(int32_t)accumulator;
-            }
-        } else {
-            *outputValue = (int32_t)accumulator;
-        }
+            } else *outputValue = -(int32_t)accumulator;
+        } else *outputValue = (int32_t)accumulator;
     }
 
     return parseStatus;
@@ -227,13 +199,10 @@ int parseNumber(const char* text, Base inputBase, int32_t* outputValue, errorID*
     }
 
     if (parseStatus == 0) {
-        if (inputBase == BASE_DEC) {
-            parseStatus = parseDecimal(text, outputValue, errorCode);
-        } else if (inputBase == BASE_HEX) {
-            parseStatus = parseHexadecimal(text, outputValue, errorCode);
-        } else if (inputBase == BASE_BIN) {
-            parseStatus = parseBinary(text, outputValue, errorCode);
-        } else {
+        if      (inputBase == BASE_DEC) parseStatus = parseDecimal(text, outputValue, errorCode);
+        else if (inputBase == BASE_HEX) parseStatus = parseHexadecimal(text, outputValue, errorCode);
+        else if (inputBase == BASE_BIN) parseStatus = parseBinary(text, outputValue, errorCode);
+        else {
             parseStatus = -1;
             *errorCode = ERROR_PARSING;
         }

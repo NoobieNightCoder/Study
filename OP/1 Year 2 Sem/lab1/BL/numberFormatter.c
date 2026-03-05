@@ -12,17 +12,11 @@ enum {
     ZERO_BINARY_LENGTH = 1
 };
 
-#define HIGHEST_BIT_INDEX ((int)((sizeof(uint32_t) * CHAR_BIT) - 1U))
-#define BINARY_DIGIT_ZERO ('0')
-#define BINARY_DIGIT_ONE ('1')
-#define HEX_FORMAT ("%X")
-#define DECIMAL_FORMAT ("%d")
-
 static char* allocateAndCopyBuffer(const char* sourceBuffer, int sourceLength) {
     char* copiedBuffer = NULL;
 
     if (sourceLength >= 0) {
-        copiedBuffer = (char*)calloc((size_t)sourceLength + 1U, 1U);
+        copiedBuffer = (char*)calloc((size_t)sourceLength + 1, 1);
 
         if (copiedBuffer) {
             memcpy(copiedBuffer, sourceBuffer, (size_t)sourceLength);
@@ -37,7 +31,7 @@ char* formatNumber(int32_t value, Base outputBase) {
 
     if (outputBase == BASE_DEC) {
         char decimalBuffer[DECIMAL_BUFFER_SIZE];
-        int decimalLength = snprintf(decimalBuffer, DECIMAL_BUFFER_SIZE, DECIMAL_FORMAT, value);
+        int decimalLength = snprintf(decimalBuffer, DECIMAL_BUFFER_SIZE, "%d", value);
 
         formattedResult = allocateAndCopyBuffer(decimalBuffer, decimalLength);
     }
@@ -45,7 +39,7 @@ char* formatNumber(int32_t value, Base outputBase) {
     if (!formattedResult && outputBase == BASE_HEX) {
         char hexBuffer[HEX_BUFFER_SIZE];
         uint32_t unsignedValue = (uint32_t)value;
-        int hexLength = snprintf(hexBuffer, HEX_BUFFER_SIZE, HEX_FORMAT, unsignedValue);
+        int hexLength = snprintf(hexBuffer, HEX_BUFFER_SIZE, "%X", unsignedValue);
 
         formattedResult = allocateAndCopyBuffer(hexBuffer, hexLength);
     }
@@ -53,27 +47,24 @@ char* formatNumber(int32_t value, Base outputBase) {
     if (!formattedResult && outputBase == BASE_BIN) {
         uint32_t unsignedValue = (uint32_t)value;
         size_t binaryLength = ZERO_BINARY_LENGTH;
-        int bitIndex = HIGHEST_BIT_INDEX;
+        int bitIndex = (int)((sizeof(uint32_t) * CHAR_BIT) - 1);
         char* binaryResult = NULL;
 
-        while (bitIndex >= 0 && unsignedValue != 0U && binaryLength == ZERO_BINARY_LENGTH) {
-            if (((unsignedValue >> bitIndex) & 1U) == 1U) {
-                binaryLength = (size_t)bitIndex + 1U;
+        while (bitIndex >= 0 && unsignedValue != 0 && binaryLength == ZERO_BINARY_LENGTH) {
+            if (((unsignedValue >> bitIndex) & 1U) == 1) {
+                binaryLength = (size_t)bitIndex + 1;
             }
             bitIndex--;
         }
 
-        binaryResult = (char*)calloc(binaryLength + 1U, 1U);
+        binaryResult = (char*)calloc(binaryLength + 1, 1);
 
         if (binaryResult) {
-            size_t writeIndex = 0U;
+            size_t writeIndex = 0;
             int readBitIndex = (int)binaryLength - 1;
 
             while (readBitIndex >= 0) {
-                binaryResult[writeIndex] =
-                    (char)((((unsignedValue >> readBitIndex) & 1U) == 1U)
-                               ? BINARY_DIGIT_ONE
-                               : BINARY_DIGIT_ZERO);
+                binaryResult[writeIndex] = (char)((((unsignedValue >> readBitIndex) & 1U) == 1) ? '1' : '0');
                 writeIndex++;
                 readBitIndex--;
             }

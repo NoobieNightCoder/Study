@@ -8,8 +8,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define STRING_TERMINATOR ('\0')
-
 void freeConversionResult(ConversionResult* conversionResult) {
     if (conversionResult) {
         if (conversionResult->result) {
@@ -32,12 +30,11 @@ ConversionResult* logicConvert(const char* inputText, Base inputBase, Base outpu
     int32_t parsedValue = 0;
     errorID parseErrorId = ERROR_PARSING;
 
-    if (!conversionResult) {
+    if (!conversionResult)
         conversionStatus = -1;
-    }
 
     if (conversionStatus == 0) {
-        if (!inputText || inputText[0] == STRING_TERMINATOR) {
+        if (!inputText || inputText[0] == '\0') {
             setErrorMessageById(conversionResult, ERROR_EMPTY_INPUT);
             conversionStatus = -1;
         }
@@ -46,9 +43,8 @@ ConversionResult* logicConvert(const char* inputText, Base inputBase, Base outpu
     if (conversionStatus == 0) {
         conversionStatus = parseNumber(inputText, inputBase, &parsedValue, &parseErrorId);
 
-        if (conversionStatus != 0) {
+        if (conversionStatus != 0)
             setErrorMessageById(conversionResult, parseErrorId);
-        }
     }
 
     if (conversionStatus == 0) {
@@ -68,15 +64,13 @@ int logicSwap(char** inputText, Base* inputBase, char** outputText, Base* output
     char* swappedInputText = NULL;
     char* swappedOutputText = NULL;
 
-    if (errorMessage) {
+    if (errorMessage)
         *errorMessage = NULL;
-    }
 
     if (!inputText || !outputText || !inputBase || !outputBase) {
         swapStatus = -1;
-        if (errorMessage) {
+        if (errorMessage)
             *errorMessage = duplicateString(getErrorMessage(ERROR_PARSING));
-        }
     }
 
     if (swapStatus == 0) {
@@ -85,9 +79,8 @@ int logicSwap(char** inputText, Base* inputBase, char** outputText, Base* output
 
         if (!swappedInputText || !swappedOutputText) {
             swapStatus = -1;
-            if (errorMessage) {
+            if (errorMessage)
                 *errorMessage = duplicateString(getErrorMessage(ERROR_MEMORY));
-            }
         }
     }
 
@@ -104,12 +97,10 @@ int logicSwap(char** inputText, Base* inputBase, char** outputText, Base* output
     }
 
     if (swapStatus != 0) {
-        if (swappedInputText) {
+        if (swappedInputText)
             free(swappedInputText);
-        }
-        if (swappedOutputText) {
+        if (swappedOutputText)
             free(swappedOutputText);
-        }
     }
 
     return swapStatus;

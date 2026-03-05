@@ -3,26 +3,14 @@
 #include <QString>
 #include "../BL/conversionMain.h"
 
-class AppController
-{
+class AppController {
 public:
-    AppController() = default;
-
-    struct ConversionResponse
-    {
+    struct ConversionResponse {
         QString ResultText;
         QString ErrorText;
     };
 
-    ConversionResponse Convert(
-        const QString& InputText,
-        Base InputBase,
-        Base OutputBase);
+    ConversionResponse Convert(const QString& InputText, Base InputBase, Base OutputBase);
 
-    bool SwapValues(
-        QString& InputText,
-        Base& InputBase,
-        QString& OutputText,
-        Base& OutputBase,
-        QString& ErrorText);
+    bool SwapValues(QString& InputText, Base& InputBase, QString& OutputText, Base& OutputBase, QString& ErrorText);
 };

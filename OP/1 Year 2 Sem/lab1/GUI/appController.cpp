@@ -1,82 +1,92 @@
 #include "appController.h"
 
+#include "../BL/errorHandler.h"
+#include "../BL/stringUtils.h"
+
 #include <QByteArray>
 #include <cstdlib>
-#include <cstring>
+
+static char* duplicateQStringAsUtf8(const QString& text) {
+    QByteArray bytes = text.toUtf8();
+    char* duplicated = duplicateString(bytes.constData());
+    return duplicated;
+}
+
+static void freeCString(char* text) {
+    if (text) free(text);
+}
+
+static void setErrorById(QString& errorText, errorID id) {
+    errorText = QString::fromUtf8(getErrorMessage(id));
+}
+
+static int prepareSwapBuffers(const QString& inputText, const QString& outputText, char** inputBuffer, char** outputBuffer) {
+    int status = 0;
+
+    *inputBuffer = duplicateQStringAsUtf8(inputText);
+    *outputBuffer = duplicateQStringAsUtf8(outputText);
+
+    if (!*inputBuffer || !*outputBuffer)
+        status = -1;
+
+    return status;
+}
+
+static void releaseSwapResources(char* inputBuffer, char* outputBuffer, char* swapError) {
+    freeCString(inputBuffer);
+    freeCString(outputBuffer);
+    freeCString(swapError);
+}
+
+static void setSwapErrorText(QString& errorText, char* swapError) {
+    if (swapError)
+        errorText = QString::fromUtf8(swapError);
+    else
+        setErrorById(errorText, ERROR_PARSING);
+}
 
 AppController::ConversionResponse AppController::Convert(const QString& InputText, Base InputBase, Base OutputBase) {
-    ConversionResponse Response;
+    ConversionResponse response;
+    QByteArray inputBytes = InputText.toUtf8();
+    const char* inputCString = inputBytes.constData();
+    ConversionResult* logicResult = logicConvert(inputCString, InputBase, OutputBase);
 
-    QByteArray InputBytes = InputText.toUtf8();
-    const char* InputCString = InputBytes.constData();
-
-    ConversionResult* LogicResult = logicConvert(InputCString, InputBase, OutputBase);
-
-    if (!LogicResult) {
-        Response.ErrorText = "Внутренняя ошибка памяти.";
-        return Response;
+    if (!logicResult)
+        setErrorById(response.ErrorText, ERROR_MEMORY);
+    else {
+        if (logicResult->error && logicResult->error[0] != '\0')
+            response.ErrorText = QString::fromUtf8(logicResult->error);
+        else if (logicResult->result)
+            response.ResultText = QString::fromUtf8(logicResult->result);
+            
+        freeConversionResult(logicResult);
     }
 
-    if (LogicResult->error && LogicResult->error[0] != '\0') {
-        Response.ErrorText = QString::fromUtf8(LogicResult->error);
-        freeConversionResult(LogicResult);
-        return Response;
-    }
-
-    if (LogicResult->result) {
-        Response.ResultText = QString::fromUtf8(LogicResult->result);
-    }
-
-    freeConversionResult(LogicResult);
-    return Response;
+    return response;
 }
 
 bool AppController::SwapValues(QString& InputText, Base& InputBase, QString& OutputText, Base& OutputBase, QString& ErrorText) {
-    QByteArray InputBytes = InputText.toUtf8();
-    QByteArray OutputBytes = OutputText.toUtf8();
+    bool isSuccess = true;
+    char* inputCString = nullptr;
+    char* outputCString = nullptr;
+    char* swapError = nullptr;
 
-    char* InputCString = nullptr;
-    char* OutputCString = nullptr;
-
-    if (!InputBytes.isEmpty()) {
-        InputCString = (char*)malloc(InputBytes.size() + 1);
-        memcpy(InputCString, InputBytes.constData(), InputBytes.size());
-        InputCString[InputBytes.size()] = '\0';
-    } else {
-        InputCString = (char*)calloc(1,1);
+    if (prepareSwapBuffers(InputText, OutputText, &inputCString, &outputCString) != 0) {
+        isSuccess = false;
+        setErrorById(ErrorText, ERROR_MEMORY);
     }
 
-    if (!OutputBytes.isEmpty()) {
-        OutputCString = (char*)malloc(OutputBytes.size() + 1);
-        memcpy(OutputCString, OutputBytes.constData(), OutputBytes.size());
-        OutputCString[OutputBytes.size()] = '\0';
-    } else {
-        OutputCString = (char*)calloc(1,1);
-    }
-
-    char* SwapError = nullptr;
-
-    int Result = logicSwap(&InputCString, &InputBase, &OutputCString, &OutputBase, &SwapError);
-
-    if (Result != 0) {
-        if (SwapError) {
-            ErrorText = QString::fromUtf8(SwapError);
-            free(SwapError);
-        } else {
-            ErrorText = "Ошибка при перестановке.";
+    if (isSuccess) {
+        if (logicSwap(&inputCString, &InputBase, &outputCString, &OutputBase, &swapError) != 0) {
+            isSuccess = false;
+            setSwapErrorText(ErrorText, swapError);
         }
-
-        if (InputCString) free(InputCString);
-        if (OutputCString) free(OutputCString);
-
-        return false;
+        else {
+            InputText = QString::fromUtf8(inputCString);
+            OutputText = QString::fromUtf8(outputCString);
+        }
     }
 
-    InputText = QString::fromUtf8(InputCString);
-    OutputText = QString::fromUtf8(OutputCString);
-
-    free(InputCString);
-    free(OutputCString);
-
-    return true;
+    releaseSwapResources(inputCString, outputCString, swapError);
+    return isSuccess;
 }

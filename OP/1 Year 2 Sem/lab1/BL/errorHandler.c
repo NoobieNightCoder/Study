@@ -20,9 +20,8 @@ static const ErrorMessagesStruct errorMessages[] = {
 const char* getErrorMessage(errorID messageID) {
     const char* errorMessage = errorMessages[ERROR_UNKNOWN].message;
 
-    if (messageID >= ERROR_EMPTY_INPUT && messageID <= ERROR_UNKNOWN) {
+    if (messageID >= ERROR_EMPTY_INPUT && messageID <= ERROR_UNKNOWN)
         errorMessage = errorMessages[messageID].message;
-    }
 
     return errorMessage;
 }

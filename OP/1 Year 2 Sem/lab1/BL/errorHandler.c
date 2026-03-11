@@ -27,7 +27,7 @@ const char* getErrorMessage(errorID messageID) {
 }
 
 void setErrorMessage(ConversionResult* result, const char* message) {
-    if (result) {
+    if(result) {
         if (result->error) {
             free(result->error);
             result->error = NULL;

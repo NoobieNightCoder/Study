@@ -7,6 +7,7 @@ class AppController {
 private:
     QString InputText;
     QString OutputText;
+    QString ErrorText;
     Base InputBase = BASE_DEC;
     Base OutputBase = BASE_DEC;
 
@@ -24,11 +25,12 @@ public:
 
     QString getInputText();
     QString getOutputText();
+    QString getErrorText();
 
     void setInputText(QString input);
     void setOutputText(QString output);
 
-    ConversionResponse Convert();
+    void Convert();
 
-    bool SwapValues(QString& ErrorText);
+    bool SwapValues();
 };

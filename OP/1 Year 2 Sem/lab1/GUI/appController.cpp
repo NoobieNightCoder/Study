@@ -79,27 +79,29 @@ QString AppController::getOutputText() {
     return OutputText;
 }
 
-AppController::ConversionResponse AppController::Convert() {
-    ConversionResponse response;
+QString AppController::getErrorText() {
+    return ErrorText;
+}
+
+void AppController::Convert() {
     QByteArray inputBytes = InputText.toUtf8();
     const char* inputCString = inputBytes.constData();
     ConversionResult* logicResult = logicConvert(inputCString, InputBase, OutputBase);
+    ErrorText = NULL;
 
-    if (!logicResult)
-        setErrorById(response.ErrorText, ERROR_MEMORY);
-    else {
+    if(logicResult) {
         if (logicResult->error && logicResult->error[0] != '\0')
-            response.ErrorText = QString::fromUtf8(logicResult->error);
+            ErrorText = QString::fromUtf8(logicResult->error);
         else if (logicResult->result)
-            response.ResultText = QString::fromUtf8(logicResult->result);
+            OutputText = QString::fromUtf8(logicResult->result);
             
         freeConversionResult(logicResult);
+    } else {
+        setErrorById(ErrorText, ERROR_MEMORY);
     }
-
-    return response;
 }
 
-bool AppController::SwapValues(QString& ErrorText) {
+bool AppController::SwapValues() {
     bool isSuccess = true;
     char* inputCString = nullptr;
     char* outputCString = nullptr;

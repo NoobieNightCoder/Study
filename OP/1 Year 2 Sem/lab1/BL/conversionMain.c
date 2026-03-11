@@ -8,46 +8,28 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-void freeConversionResult(ConversionResult* conversionResult) {
-    if (conversionResult) {
-        if (conversionResult->result) {
-            free(conversionResult->result);
-            conversionResult->result = NULL;
-        }
-
-        if (conversionResult->error) {
-            free(conversionResult->error);
-            conversionResult->error = NULL;
-        }
-
-        free(conversionResult);
-    }
-}
-
 ConversionResult* logicConvert(const char* inputText, Base inputBase, Base outputBase) {
-    ConversionResult* conversionResult = (ConversionResult*)calloc(1, sizeof(ConversionResult));
+    ConversionResult* conversionResult = allocateMemory(1, sizeof(ConversionResult));
     int conversionStatus = 0;
     int32_t parsedValue = 0;
     errorID parseErrorId = ERROR_PARSING;
 
-    if (!conversionResult)
+    if(!conversionResult)
         conversionStatus = -1;
 
-    if (conversionStatus == 0) {
-        if (!inputText || inputText[0] == '\0') {
-            setErrorMessageById(conversionResult, ERROR_EMPTY_INPUT);
-            conversionStatus = -1;
-        }
+    if (!inputText || inputText[0] == '\0') {
+        setErrorMessageById(conversionResult, ERROR_EMPTY_INPUT);
+        conversionStatus = -1;
     }
 
-    if (conversionStatus == 0) {
+    if (!conversionStatus) {
         conversionStatus = parseNumber(inputText, inputBase, &parsedValue, &parseErrorId);
 
-        if (conversionStatus != 0)
+        if (conversionStatus)
             setErrorMessageById(conversionResult, parseErrorId);
     }
 
-    if (conversionStatus == 0) {
+    if (!conversionStatus) {
         conversionResult->result = formatNumber(parsedValue, outputBase);
 
         if (!conversionResult->result) {

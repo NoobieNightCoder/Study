@@ -1,5 +1,7 @@
 #include "numberFormatter.h"
 
+#include "stringUtils.h"
+
 #include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -11,20 +13,6 @@ enum {
     HEX_BUFFER_SIZE = 16,
     ZERO_BINARY_LENGTH = 1
 };
-
-static char* allocateAndCopyBuffer(const char* sourceBuffer, int sourceLength) {
-    char* copiedBuffer = NULL;
-
-    if (sourceLength >= 0) {
-        copiedBuffer = (char*)calloc((size_t)sourceLength + 1, sizeof(char));
-
-        if (copiedBuffer) {
-            memcpy(copiedBuffer, sourceBuffer, (size_t)sourceLength);
-        }
-    }
-
-    return copiedBuffer;
-}
 
 char* formatNumber(int32_t value, Base outputBase) {
     char* formattedResult = NULL;
@@ -57,14 +45,14 @@ char* formatNumber(int32_t value, Base outputBase) {
             bitIndex--;
         }
 
-        binaryResult = (char*)calloc(binaryLength + 1, sizeof(char));
+        binaryResult = allocateMemory(binaryLength + 1, sizeof(char));
 
         if (binaryResult) {
             size_t writeIndex = 0;
             int readBitIndex = (int)binaryLength - 1;
 
             while (readBitIndex >= 0) {
-                binaryResult[writeIndex] = (char)((((unsignedValue >> readBitIndex) & 1U) == 1) ? '1' : '0');
+                binaryResult[writeIndex] = (((unsignedValue >> readBitIndex) & 1U) == 1) ? '1' : '0';
                 writeIndex++;
                 readBitIndex--;
             }

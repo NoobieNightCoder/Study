@@ -80,21 +80,19 @@ void MainWindow::ClearError() {
 void MainWindow::OnConvertClicked() {
     ClearError();
 
-    auto Response = Controller.Convert();
+    Controller.Convert();
 
-    if (!Response.ErrorText.isEmpty()) {
-        ShowError(Response.ErrorText);
+    if (!Controller.getErrorText().isEmpty()) {
+        ShowError(Controller.getErrorText());
         ui->lineEdit_output->clear();
     } else
-        ui->lineEdit_output->setText(Response.ResultText);
+        ui->lineEdit_output->setText(Controller.getOutputText());
 }
 
 void MainWindow::OnSwapClicked() {
     ClearError();
 
-    QString ErrorText;
-
-    bool Success = Controller.SwapValues(ErrorText);
+    bool Success = Controller.SwapValues();
 
     Base InputBase = Controller.getInputBase();
     Base OutputBase = Controller.getOutputBase();
@@ -102,7 +100,7 @@ void MainWindow::OnSwapClicked() {
     QString OutputText = Controller.getOutputText();
 
     if (!Success)
-        ShowError(ErrorText);
+        ShowError(Controller.getErrorText());
     else {
         ui->lineEdit_input->setText(InputText);
         ui->lineEdit_output->setText(OutputText);

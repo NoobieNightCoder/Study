@@ -37,6 +37,7 @@
                 "${fileDirname}\\UI\\InputOutputUI.cpp",
                 "${fileDirname}\\UI\\ShapeParametersVisitor.cpp",
                 "${fileDirname}\\UI\\ShapePerimeterVisitor.cpp",
+                "${fileDirname}\\UI\\ShapeTypeVisitor.cpp",
                 "${fileDirname}\\UI\\ShapeTextCatalog.cpp",
                 "${fileDirname}\\UI\\UiMessageCatalog.cpp",
                 "${fileDirname}\\BL\\Shapes.cpp",

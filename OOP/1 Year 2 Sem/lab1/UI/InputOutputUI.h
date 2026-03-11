@@ -23,7 +23,7 @@ private:
 
             std::stringstream stream(line);
             T value {};
-            bool canRead = static_cast<bool>(stream >> value);
+            bool canRead = (bool)(stream >> value);
             bool isEof = stream.eof();
             isValid = canRead && isEof;
 
@@ -39,8 +39,6 @@ private:
     }
 
 public:
-    int noError() const override;
-
     void printMainMenu() const override;
     void printShapeMenu() const override;
     void printMessage(UiMessageId messageId) const override;
@@ -50,9 +48,9 @@ public:
 
     int readMenuItem() const override;
     int readShapeId() const override;
-    std::string readName(int& errorCode) const override;
-    double readRadius(int& errorCode) const override;
-    double readPerimeterThreshold(int& errorCode) const override;
+    std::string readName() const override;
+    double readRadius() const override;
+    double readPerimeterThreshold() const override;
     Point readCentre() const override;
     std::vector<Point> readRectangleVertices() const override;
     std::vector<Point> readTriangleVertices() const override;

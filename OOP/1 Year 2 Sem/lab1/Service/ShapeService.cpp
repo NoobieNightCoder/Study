@@ -5,9 +5,9 @@
 #include <memory>
 #include <vector>
 
+#define ZERO 0
 #define ONE 1
 #define TWO 2
-#define THREE 3
 
 using namespace std;
 
@@ -23,18 +23,17 @@ namespace {
         }
 
         static double triangleArea(const vector<Point>& vertices) {
-            double firstSide = distance(vertices[ONE], vertices[TWO]);
-            double secondSide = distance(vertices[TWO], vertices[THREE]);
-            double thirdSide = distance(vertices[THREE], vertices[ONE]);
+            double firstSide = distance(vertices[ZERO], vertices[ONE]);
+            double secondSide = distance(vertices[ONE], vertices[TWO]);
+            double thirdSide = distance(vertices[TWO], vertices[ZERO]);
             double semiperimeter = (firstSide + secondSide + thirdSide) / TWO;
-            double area = sqrt(semiperimeter * (semiperimeter - firstSide) *
-                (semiperimeter - secondSide) * (semiperimeter - thirdSide));
+            double area = sqrt(semiperimeter * (semiperimeter - firstSide) * (semiperimeter - secondSide) * (semiperimeter - thirdSide));
             return area;
         }
 
         static double rectangleArea(const vector<Point>& vertices) {
-            double firstSide = distance(vertices[ONE], vertices[TWO]);
-            double secondSide = distance(vertices[TWO], vertices[THREE]);
+            double firstSide = distance(vertices[ZERO], vertices[ONE]);
+            double secondSide = distance(vertices[ONE], vertices[TWO]);
             double area = firstSide * secondSide;
             return area;
         }
@@ -132,7 +131,7 @@ void ShapeService::sortByPerimeter() {
 ServiceError ShapeService::deleteById(int oneBasedId) {
     ServiceError result = ServiceError::none;
     bool idIsTooSmall = oneBasedId <= 0;
-    bool idIsTooBig = static_cast<size_t>(oneBasedId) > shapesList.size();
+    bool idIsTooBig = (size_t)oneBasedId > shapesList.size();
     bool hasError = idIsTooSmall || idIsTooBig;
 
     if (hasError) {

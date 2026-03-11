@@ -6,11 +6,6 @@
 
 using namespace std;
 
-int InputOutputUI::noError() const {
-    int value = -1;
-    return value;
-}
-
 void InputOutputUI::printMainMenu() const {
     printMessage(UiMessageId::appTitle);
     for (const auto& item : UiMessageCatalog::getMainMenuItems()) {
@@ -51,33 +46,33 @@ int InputOutputUI::readShapeId() const {
     return shapeId;
 }
 
-string InputOutputUI::readName(int& errorCode) const {
+string InputOutputUI::readName() const {
     string name = readValue<string>(UiMessageCatalog::getNamePrompt());
     bool hasError = name.empty();
 
     if (hasError)
-        errorCode = (int)UiErrorId::badName;
+        throw (int)UiErrorId::badName;
 
     return name;
 }
 
-double InputOutputUI::readRadius(int& errorCode) const {
+double InputOutputUI::readRadius() const {
     double radius = readValue<double>(UiMessageCatalog::getRadiusPrompt());
     bool hasError = radius <= 0;
 
     if (hasError) {
-        errorCode = (int)UiErrorId::badRadius;
+        throw (int)UiErrorId::badRadius;
     }
 
     return radius;
 }
 
-double InputOutputUI::readPerimeterThreshold(int& errorCode) const {
+double InputOutputUI::readPerimeterThreshold() const {
     double threshold = readValue<double>(UiMessageCatalog::getPerimeterThresholdPrompt());
     bool hasError = threshold <= 0;
 
     if (hasError) {
-        errorCode = (int)UiErrorId::badPerimeterThreshold;
+        throw (int)UiErrorId::badPerimeterThreshold;
     }
 
     return threshold;

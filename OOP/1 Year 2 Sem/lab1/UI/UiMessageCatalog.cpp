@@ -10,6 +10,7 @@ const vector<MenuItem> mainMenuItems {
     { (int)MainMenuId::addShape,                "Add a shape to the shape list"                         },
     { (int)MainMenuId::printListParameters,     "Print a list of shapes with parameters"                },
     { (int)MainMenuId::printListPerimeters,     "Print a list of shapes with perimeters"                },
+    { (int)MainMenuId::printListShapes,         "Print a list of shapes"                                },
     { (int)MainMenuId::printPerimeterSum,       "Print the sum of the perimeters of all shapes"         },
     { (int)MainMenuId::sortShapes,              "Sort shapes by ascending perimeter"                    },
     { (int)MainMenuId::deleteShape,             "Delete one shape by id"                                },

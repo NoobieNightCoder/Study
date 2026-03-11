@@ -11,13 +11,14 @@ private:
 
     UiErrorId mapServiceError(ServiceError serviceError) const;
 
-    int createCircle();
-    int createRectangle();
-    int createTriangle();
+    void createCircle();
+    void createRectangle();
+    void createTriangle();
 
     void addShapeMenu();
     void listParamMenu() const;
     void listPerimMenu() const;
+    void listShapesMenu() const;
     void sumPerimMenu() const;
     void sortListMenu();
     void deleteShapeMenu();

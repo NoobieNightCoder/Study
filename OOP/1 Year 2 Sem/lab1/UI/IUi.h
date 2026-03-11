@@ -17,12 +17,13 @@ public:
     virtual void printError(UiErrorId errorId) const = 0;
     virtual void printShapeParameters(const Shape& shape, int index) const = 0;
     virtual void printShapePerimeter(const Shape& shape, int index) const = 0;
+    virtual void printShape(const Shape& shape, int index) const = 0;
 
     virtual int readMenuItem() const = 0;
     virtual int readShapeId() const = 0;
-    virtual std::string readName(int& errorCode) const = 0;
-    virtual double readRadius(int& errorCode) const = 0;
-    virtual double readPerimeterThreshold(int& errorCode) const = 0;
+    virtual std::string readName() const = 0;
+    virtual double readRadius() const = 0;
+    virtual double readPerimeterThreshold() const = 0;
     virtual Point readCentre() const = 0;
     virtual std::vector<Point> readRectangleVertices() const = 0;
     virtual std::vector<Point> readTriangleVertices() const = 0;

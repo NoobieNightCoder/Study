@@ -12,6 +12,7 @@ enum class MainMenuId {
     addShape = 1,
     printListParameters,
     printListPerimeters,
+    printListShapes,
     printPerimeterSum,
     sortShapes,
     deleteShape,

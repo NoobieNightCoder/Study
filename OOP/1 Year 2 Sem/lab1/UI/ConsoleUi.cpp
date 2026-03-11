@@ -5,6 +5,7 @@
 
 #include "ShapeParametersVisitor.h"
 #include "ShapePerimeterVisitor.h"
+#include "ShapeTypeVisitor.h"
 
 using namespace std;
 
@@ -47,6 +48,12 @@ void ConsoleUi::printShapePerimeter(const Shape& shape, int index) const {
     io.printShapeLine(index, visitor.getLine());
 }
 
+void ConsoleUi::printShape(const Shape& shape, int index) const {
+    ShapeTypeVisitor visitor;
+    shape.accept(visitor);
+    io.printShapeLine(index, visitor.getLine());
+}
+
 int ConsoleUi::readMenuItem() const {
     int item = io.readMenuItem();
     return item;
@@ -57,18 +64,18 @@ int ConsoleUi::readShapeId() const {
     return shapeId;
 }
 
-string ConsoleUi::readName(int& errorCode) const {
-    string name = io.readName(errorCode);
+string ConsoleUi::readName() const {
+    string name = io.readName();
     return name;
 }
 
-double ConsoleUi::readRadius(int& errorCode) const {
-    double radius = io.readRadius(errorCode);
+double ConsoleUi::readRadius() const {
+    double radius = io.readRadius();
     return radius;
 }
 
-double ConsoleUi::readPerimeterThreshold(int& errorCode) const {
-    double threshold = io.readPerimeterThreshold(errorCode);
+double ConsoleUi::readPerimeterThreshold() const {
+    double threshold = io.readPerimeterThreshold();
     return threshold;
 }
 

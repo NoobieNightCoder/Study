@@ -25,7 +25,7 @@ void freeConversionResult(ConversionResult* conversionResult) {
 }
 
 ConversionResult* logicConvert(const char* inputText, Base inputBase, Base outputBase) {
-    ConversionResult* conversionResult = (ConversionResult*)calloc(1U, sizeof(ConversionResult));
+    ConversionResult* conversionResult = (ConversionResult*)calloc(1, sizeof(ConversionResult));
     int conversionStatus = 0;
     int32_t parsedValue = 0;
     errorID parseErrorId = ERROR_PARSING;

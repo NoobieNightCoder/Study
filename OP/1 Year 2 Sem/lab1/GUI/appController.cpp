@@ -45,7 +45,41 @@ static void setSwapErrorText(QString& errorText, char* swapError) {
         setErrorById(errorText, ERROR_PARSING);
 }
 
-AppController::ConversionResponse AppController::Convert(const QString& InputText, Base InputBase, Base OutputBase) {
+
+
+void AppController::setInputBase(Base input) {
+    InputBase = input;
+}
+
+void AppController::setOutputBase(Base output) {
+    OutputBase = output;
+}
+
+void AppController::setInputText(QString input) {
+    InputText = input;
+}
+
+void AppController::setOutputText(QString output) {
+    OutputText = output;
+}
+
+Base AppController::getInputBase() {
+    return InputBase;
+}
+
+Base AppController::getOutputBase() {
+    return OutputBase;
+}
+
+QString AppController::getInputText() {
+    return InputText;
+}
+
+QString AppController::getOutputText() {
+    return OutputText;
+}
+
+AppController::ConversionResponse AppController::Convert() {
     ConversionResponse response;
     QByteArray inputBytes = InputText.toUtf8();
     const char* inputCString = inputBytes.constData();
@@ -65,7 +99,7 @@ AppController::ConversionResponse AppController::Convert(const QString& InputTex
     return response;
 }
 
-bool AppController::SwapValues(QString& InputText, Base& InputBase, QString& OutputText, Base& OutputBase, QString& ErrorText) {
+bool AppController::SwapValues(QString& ErrorText) {
     bool isSuccess = true;
     char* inputCString = nullptr;
     char* outputCString = nullptr;

@@ -20,13 +20,13 @@ public:
 private slots:
     void OnConvertClicked();
     void OnSwapClicked();
+    void OnRadioToggled(bool);
+    void OnEditText(const QString&);
 
 private:
     Ui::MainWindow *ui;
     AppController Controller;
 
-    Base GetInputBase() const;
-    Base GetOutputBase() const;
     void SetInputBase(Base BaseValue);
     void SetOutputBase(Base BaseValue);
 

@@ -3,6 +3,12 @@
 
 #include <iostream>
 
+/*
+
+    TODO: Сделать хранение InputText и OutputText в AppController
+
+*/
+
 typedef enum {
     HEX = 1,
     DEC = 2,
@@ -17,6 +23,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton_convert, &QPushButton::clicked, this, &MainWindow::OnConvertClicked);
     connect(ui->pushButton_swap, &QPushButton::clicked, this, &MainWindow::OnSwapClicked);
+
+    connect(ui->radioInputBin, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+    connect(ui->radioInputDec, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+    connect(ui->radioInputHex, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+
+    connect(ui->radioOutputBin, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+    connect(ui->radioOutputDec, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+    connect(ui->radioOutputHex, &QRadioButton::toggled, this, &MainWindow::OnRadioToggled);
+
+    connect(ui->lineEdit_input, &QLineEdit::textChanged, this, &MainWindow::OnEditText);
 }
 
 MainWindow::~MainWindow()
@@ -24,26 +40,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Base MainWindow::GetInputBase() const {
-    Base InputBase = BASE_DEC;
+void MainWindow::OnRadioToggled(bool toggled) {
+    QObject* senderObj = sender();
+    if(toggled) {
+        if     (senderObj == ui->radioInputBin) Controller.setInputBase(BASE_BIN);
+        else if(senderObj == ui->radioInputDec) Controller.setInputBase(BASE_DEC);
+        else if(senderObj == ui->radioInputHex) Controller.setInputBase(BASE_HEX);
 
-    if (ui->radioInputHex->isChecked())
-        InputBase = BASE_HEX;
-    else if (ui->radioInputBin->isChecked())
-        InputBase = BASE_BIN;
-
-    return InputBase;
+        else if(senderObj == ui->radioOutputBin) Controller.setOutputBase(BASE_BIN);
+        else if(senderObj == ui->radioOutputDec) Controller.setOutputBase(BASE_DEC);
+        else if(senderObj == ui->radioOutputHex) Controller.setOutputBase(BASE_HEX);
+    }
 }
 
-Base MainWindow::GetOutputBase() const {
-    Base OutputBase = BASE_DEC;
-
-    if (ui->radioOutputHex->isChecked())
-        OutputBase = BASE_HEX;
-    else if (ui->radioOutputBin->isChecked())
-        OutputBase = BASE_BIN;
-
-    return OutputBase;
+void MainWindow::OnEditText(const QString& text) {
+    Controller.setInputText(text);
 }
 
 void MainWindow::SetInputBase(Base BaseValue) {
@@ -69,11 +80,7 @@ void MainWindow::ClearError() {
 void MainWindow::OnConvertClicked() {
     ClearError();
 
-    QString InputText = ui->lineEdit_input->text();
-    Base InputBase = GetInputBase();
-    Base OutputBase = GetOutputBase();
-
-    auto Response = Controller.Convert(InputText, InputBase, OutputBase);
+    auto Response = Controller.Convert();
 
     if (!Response.ErrorText.isEmpty()) {
         ShowError(Response.ErrorText);
@@ -85,15 +92,14 @@ void MainWindow::OnConvertClicked() {
 void MainWindow::OnSwapClicked() {
     ClearError();
 
-    QString InputText = ui->lineEdit_input->text();
-    QString OutputText = ui->lineEdit_output->text();
-    Base InputBase = GetInputBase();
-    Base OutputBase = GetOutputBase();
-
     QString ErrorText;
 
-    bool Success =
-        Controller.SwapValues(InputText, InputBase, OutputText, OutputBase, ErrorText);
+    bool Success = Controller.SwapValues(ErrorText);
+
+    Base InputBase = Controller.getInputBase();
+    Base OutputBase = Controller.getOutputBase();
+    QString InputText = Controller.getInputText();
+    QString OutputText = Controller.getOutputText();
 
     if (!Success)
         ShowError(ErrorText);

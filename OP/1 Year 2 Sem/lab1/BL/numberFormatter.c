@@ -16,7 +16,7 @@ static char* allocateAndCopyBuffer(const char* sourceBuffer, int sourceLength) {
     char* copiedBuffer = NULL;
 
     if (sourceLength >= 0) {
-        copiedBuffer = (char*)calloc((size_t)sourceLength + 1, 1);
+        copiedBuffer = (char*)calloc((size_t)sourceLength + 1, sizeof(char));
 
         if (copiedBuffer) {
             memcpy(copiedBuffer, sourceBuffer, (size_t)sourceLength);
@@ -38,7 +38,7 @@ char* formatNumber(int32_t value, Base outputBase) {
 
     if (!formattedResult && outputBase == BASE_HEX) {
         char hexBuffer[HEX_BUFFER_SIZE];
-        uint32_t unsignedValue = (uint32_t)value;
+        uint32_t unsignedValue = value;
         int hexLength = snprintf(hexBuffer, HEX_BUFFER_SIZE, "%X", unsignedValue);
 
         formattedResult = allocateAndCopyBuffer(hexBuffer, hexLength);
@@ -57,7 +57,7 @@ char* formatNumber(int32_t value, Base outputBase) {
             bitIndex--;
         }
 
-        binaryResult = (char*)calloc(binaryLength + 1, 1);
+        binaryResult = (char*)calloc(binaryLength + 1, sizeof(char));
 
         if (binaryResult) {
             size_t writeIndex = 0;

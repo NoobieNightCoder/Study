@@ -3,191 +3,57 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
-// MENU MESSAGES //
+#include "../BL/Shapes.h"
+#include "IInputOutputUI.h"
+#include "UiMessageCatalog.h"
 
-// MENU STRUCTURE FOR CONNECTING MESSAGES TO THEIR ID //
-struct Menu {
-    int id;
-    std::string description;
-};
+class InputOutputUI : public IInputOutputUI {
+private:
+    template<typename T>
+    T readValue(const std::string& prompt) const {
+        T result {};
+        bool isValid = false;
 
+        std::cout << prompt;
+        while (!isValid) {
+            std::string line;
+            std::getline(std::cin, line);
 
+            std::stringstream stream(line);
+            T value {};
+            bool canRead = static_cast<bool>(stream >> value);
+            bool isEof = stream.eof();
+            isValid = canRead && isEof;
 
-// CREATING IDS //
+            if (isValid) {
+                result = value;
+            } else {
+                printError(UiErrorId::incorrectInput);
+                std::cout << prompt;
+            }
+        }
 
-// INPUT MESSAGES ID //
-typedef enum {
-    INPUT_ITEM,
-
-    INPUT_NAME,
-    INPUT_RADIUS,
-
-    INPUT_CENTRE_X,
-    INPUT_CENTRE_Y,
-
-    INPUT_RECT_VERTS_X1,
-    INPUT_RECT_VERTS_Y1,
-    INPUT_RECT_VERTS_X2,
-    INPUT_RECT_VERTS_Y2,
-
-    INPUT_TRI_VERTS_X1,
-    INPUT_TRI_VERTS_Y1,
-    INPUT_TRI_VERTS_X2,
-    INPUT_TRI_VERTS_Y2,
-    INPUT_TRI_VERTS_X3,
-    INPUT_TRI_VERTS_Y3,
-
-    INPUT_SHAPE_ID,
-
-    INPUT_PERIM_THRESHOLD
-} inputMessages;
-
-// MENU MESSAGES ID //
-typedef enum {
-    MENU_ADD_SHAPE              = 1,
-    MENU_PRINT_LIST_PARAM       = 2,
-    MENU_PRINT_LIST_PERIM       = 3,
-    MENU_PRINT_PERIM_SUM        = 4,
-    MENU_SORT_SHAPES            = 5,
-    MENU_DELETE_SHAPE           = 6,
-    MENU_DELETE_SHAPES_BY_PERIM = 7,
-    MENU_EXIT_PROGRAMM          = 8
-} menuCodes;
-
-// SHAPES MESSAGE ID //
-typedef enum {
-    CIRCLE      = 1,
-    RECTANGLE   = 2,
-    TRIANGLE    = 3
-} shapesID;
-
-// OTHER MESSAGES ID //
-typedef enum {
-    MESSAGE_SHAPE_ADDED,
-    MESSAGE_SUM_PERIM,
-    MESSAGE_LIST_SORT,
-    MESSAGE_SHAPE_DELETED,
-    MESSAGE_SHAPES_DELETED,
-    MESSAGE_SHAPE_TO_ADD,
-    MESSAGE_LAB_NAME
-} messagesID;
-
-
-// ERROR MESSAGES ID //
-typedef enum {
-    ERROR_INCORRECT_INPUT,
-    ERROR_BAD_ITEM,
-    ERROR_EMPTY_LIST,
-    ERROR_BAD_NAME,
-    ERROR_BAD_RADIUS,
-    ERROR_BAD_SHAPE,
-    ERROR_BAD_ID,
-    ERROR_BAD_PERIM_THRESHOLD
-} errorID;
-
-
-// CONNECTING IDS WITH MESSAGES //
-
-// INPUT MESSAGES //
-const Menu inputMessagesMenu[] {
-    { INPUT_ITEM,               "Enter menu item: "                         },
-
-    { INPUT_NAME,               "Enter name: "                              },
-    { INPUT_RADIUS,             "Enter radius: "                            },
-
-    { INPUT_CENTRE_X,           "Center X Coordinate: "                     },
-    { INPUT_CENTRE_Y,           "Center Y Coordinate: "                     },
-
-    { INPUT_RECT_VERTS_X1,      "Enter 1st Vertice X Coordinate: "          },
-    { INPUT_RECT_VERTS_Y1,      "Enter 1st Vertice Y Coordinate: "          },
-    { INPUT_RECT_VERTS_X2,      "Enter 3rd Vertice X Coordinate: "          },
-    { INPUT_RECT_VERTS_Y2,      "Enter 3rd Vertice Y Coordinate: "          },
-
-    { INPUT_TRI_VERTS_X1,       "Enter 1st Vertice X Coordinate: "          },
-    { INPUT_TRI_VERTS_Y1,       "Enter 1st Vertice Y Coordinate: "          },
-    { INPUT_TRI_VERTS_X2,       "Enter 2nd Vertice X Coordinate: "          },
-    { INPUT_TRI_VERTS_Y2,       "Enter 2nd Vertice Y Coordinate: "          },
-    { INPUT_TRI_VERTS_X3,       "Enter 3rd Vertice X Coordinate: "          },
-    { INPUT_TRI_VERTS_Y3,       "Enter 3rd Vertice Y Coordinate: "          },
-
-    { INPUT_SHAPE_ID,           "What ID of the Shape you want to delete: " },
-
-    { INPUT_PERIM_THRESHOLD,    "Enter perimeter threshold: "               }
-};
-
-// MENU MESSAGES //
-const Menu mainMenu[] {
-    { MENU_ADD_SHAPE,                "Add a shape to the shape list"                                  },
-    { MENU_PRINT_LIST_PARAM,         "Print a list of shapes with parameters"                         },
-    { MENU_PRINT_LIST_PERIM,         "Print a list of shapes with perimeters"                         },
-    { MENU_PRINT_PERIM_SUM,          "Print the sum of the perimeters of all shapes"                  },
-    { MENU_SORT_SHAPES,              "Sort the shapes in the list by ascending perimeter"             },
-    { MENU_DELETE_SHAPE,             "Remove a shape from the list by number"                         },
-    { MENU_DELETE_SHAPES_BY_PERIM,   "Remove shapes from the list larger than the entered perimeter"  },
-    { MENU_EXIT_PROGRAMM,            "Exit the program"                                               }
-};
-
-// SHAPE MESSAGES //
-const Menu shapeAddMenu[] {
-    { CIRCLE,       "Circle"    },
-    { RECTANGLE,    "Rectangle" },
-    { TRIANGLE,     "Triangle"  }
-};
-
-// OTHER MESSAGES //
-const Menu messagesMenu[] {
-    { MESSAGE_SHAPE_ADDED,      "Shape has been added!"                                     },
-    { MESSAGE_SUM_PERIM,        "Sum of Perimeters: "                                       },
-    { MESSAGE_LIST_SORT,        "List sorted!"                                              },
-    { MESSAGE_SHAPE_DELETED,    "Shape has been deleted!"                                   },
-    { MESSAGE_SHAPES_DELETED,   "Shapes with larger than set perimeter have been deleted!"  },
-    { MESSAGE_SHAPE_TO_ADD,     "Which shape do you want to add?"                           },
-    { MESSAGE_LAB_NAME,         "Lab Work #1"                                               }
-};
-
-// ERROR MESSAGES //
-const Menu errorMessagesMenu[] {
-    { ERROR_INCORRECT_INPUT,        "Invalid input. Try again."                         },
-    { ERROR_BAD_ITEM,               "This Item does not exist."                         },
-    { ERROR_EMPTY_LIST,             "The Shape List is Empty."                          },
-    { ERROR_BAD_NAME,               "This Name can't be applied."                       },
-    { ERROR_BAD_RADIUS,             "This Radius is Negative OR Equals 0"               },
-    { ERROR_BAD_SHAPE,              "This Shape can't exist."                           },
-    { ERROR_BAD_ID,                 "This ID does not exist."                           },
-    { ERROR_BAD_PERIM_THRESHOLD,    "This Perimeter Threshold is too Big OR Negative."  }
-};
-
-
-
-// FUNCTIONS //
-
-// OUTPUT //
-void printMessage(int messageID);
-
-template <class T>
-void printMessage(int messageID, T arg) {
-    std::cout << messagesMenu[messageID].description << arg << std::endl;
-}
-
-void printError(int errorMessageID);
-
-
-
-// INPUT //
-template<typename T>
-T inputValue(int messageID) {
-    T value;
-    std::string line;
-
-    std::cout << inputMessagesMenu[messageID].description;
-
-    while (true) {
-        std::getline(std::cin, line);
-        std::stringstream ss(line);
-
-        if (ss >> value && ss.eof()) return value;
-
-        printError(ERROR_INCORRECT_INPUT);
+        return result;
     }
-}
+
+public:
+    int noError() const override;
+
+    void printMainMenu() const override;
+    void printShapeMenu() const override;
+    void printMessage(UiMessageId messageId) const override;
+    void printMessage(UiMessageId messageId, double value) const override;
+    void printError(UiErrorId errorId) const override;
+    void printShapeLine(int index, const std::string& line) const override;
+
+    int readMenuItem() const override;
+    int readShapeId() const override;
+    std::string readName(int& errorCode) const override;
+    double readRadius(int& errorCode) const override;
+    double readPerimeterThreshold(int& errorCode) const override;
+    Point readCentre() const override;
+    std::vector<Point> readRectangleVertices() const override;
+    std::vector<Point> readTriangleVertices() const override;
+};

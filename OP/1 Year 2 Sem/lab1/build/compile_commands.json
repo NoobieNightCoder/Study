@@ -1,0 +1,62 @@
+[
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -o CMakeFiles\\core_logic.dir\\core_logic_autogen\\mocs_compilation.cpp.obj -c C:\\labs\\OP\\lab1\\build\\core_logic_autogen\\mocs_compilation.cpp",
+  "file": "C:/labs/OP/lab1/build/core_logic_autogen/mocs_compilation.cpp",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/core_logic_autogen/mocs_compilation.cpp.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\gcc.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -g -std=gnu11 -o CMakeFiles\\core_logic.dir\\BL\\conversionMain.c.obj -c C:\\labs\\OP\\lab1\\BL\\conversionMain.c",
+  "file": "C:/labs/OP/lab1/BL/conversionMain.c",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/BL/conversionMain.c.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\gcc.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -g -std=gnu11 -o CMakeFiles\\core_logic.dir\\BL\\errorHandler.c.obj -c C:\\labs\\OP\\lab1\\BL\\errorHandler.c",
+  "file": "C:/labs/OP/lab1/BL/errorHandler.c",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/BL/errorHandler.c.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\gcc.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -g -std=gnu11 -o CMakeFiles\\core_logic.dir\\BL\\stringUtils.c.obj -c C:\\labs\\OP\\lab1\\BL\\stringUtils.c",
+  "file": "C:/labs/OP/lab1/BL/stringUtils.c",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/BL/stringUtils.c.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\gcc.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -g -std=gnu11 -o CMakeFiles\\core_logic.dir\\BL\\numberParser.c.obj -c C:\\labs\\OP\\lab1\\BL\\numberParser.c",
+  "file": "C:/labs/OP/lab1/BL/numberParser.c",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/BL/numberParser.c.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\gcc.exe -IC:/labs/OP/lab1/build/core_logic_autogen/include -g -std=gnu11 -o CMakeFiles\\core_logic.dir\\BL\\numberFormatter.c.obj -c C:\\labs\\OP\\lab1\\BL\\numberFormatter.c",
+  "file": "C:/labs/OP/lab1/BL/numberFormatter.c",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/core_logic.dir/BL/numberFormatter.c.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -IC:/labs/OP/lab1/build/lab1_autogen/include -isystem C:/Qt/6.10.2/mingw_64/include/QtCore -isystem C:/Qt/6.10.2/mingw_64/include -isystem C:/Qt/6.10.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.10.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.10.2/mingw_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -o CMakeFiles\\lab1.dir\\lab1_autogen\\mocs_compilation.cpp.obj -c C:\\labs\\OP\\lab1\\build\\lab1_autogen\\mocs_compilation.cpp",
+  "file": "C:/labs/OP/lab1/build/lab1_autogen/mocs_compilation.cpp",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -IC:/labs/OP/lab1/build/lab1_autogen/include -isystem C:/Qt/6.10.2/mingw_64/include/QtCore -isystem C:/Qt/6.10.2/mingw_64/include -isystem C:/Qt/6.10.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.10.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.10.2/mingw_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -o CMakeFiles\\lab1.dir\\GUI\\main.cpp.obj -c C:\\labs\\OP\\lab1\\GUI\\main.cpp",
+  "file": "C:/labs/OP/lab1/GUI/main.cpp",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/lab1.dir/GUI/main.cpp.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -IC:/labs/OP/lab1/build/lab1_autogen/include -isystem C:/Qt/6.10.2/mingw_64/include/QtCore -isystem C:/Qt/6.10.2/mingw_64/include -isystem C:/Qt/6.10.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.10.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.10.2/mingw_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -o CMakeFiles\\lab1.dir\\GUI\\appController.cpp.obj -c C:\\labs\\OP\\lab1\\GUI\\appController.cpp",
+  "file": "C:/labs/OP/lab1/GUI/appController.cpp",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/lab1.dir/GUI/appController.cpp.obj"
+},
+{
+  "directory": "C:/labs/OP/lab1/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -IC:/labs/OP/lab1/build/lab1_autogen/include -isystem C:/Qt/6.10.2/mingw_64/include/QtCore -isystem C:/Qt/6.10.2/mingw_64/include -isystem C:/Qt/6.10.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.10.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.10.2/mingw_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -o CMakeFiles\\lab1.dir\\GUI\\mainwindow.cpp.obj -c C:\\labs\\OP\\lab1\\GUI\\mainwindow.cpp",
+  "file": "C:/labs/OP/lab1/GUI/mainwindow.cpp",
+  "output": "C:/labs/OP/lab1/build/CMakeFiles/lab1.dir/GUI/mainwindow.cpp.obj"
+}
+]

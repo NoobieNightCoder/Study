@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>615</width>
+    <height>631</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Calculator</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background: #0f172a;
+}
+QWidget#centralwidget {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #111827, stop:1 #0f172a);
+}
+QLabel#label {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    padding: 10px 14px;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: &quot;Segoe UI&quot;;
+}
+QPushButton {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: &quot;Segoe UI&quot;;
+    min-height: 68px;
+    min-width: 68px;
+}
+QPushButton:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+QPushButton:pressed {
+    background: rgba(255, 255, 255, 0.20);
+}
+QPushButton#numButtonCalc {
+    background: #f59e0b;
+    color: #111827;
+    border: none;
+    font-size: 24px;
+}
+QPushButton#numButtonCalc:hover {
+    background: #fbbf24;
+}
+QPushButton#numButtonCalc:pressed {
+    background: #d97706;
+}
+QPushButton#numButtonC,
+QPushButton#numButtonDel {
+    background: rgba(239, 68, 68, 0.18);
+    color: #fecaca;
+}
+QPushButton#numButtonC:hover,
+QPushButton#numButtonDel:hover {
+    background: rgba(239, 68, 68, 0.28);
+}
+QPushButton#numButtonDiv,
+QPushButton#numButtonMul,
+QPushButton#numButtonMinus,
+QPushButton#numButtonPlus,
+QPushButton#numButtonSqrt {
+    background: rgba(59, 130, 246, 0.18);
+    color: #bfdbfe;
+}
+QPushButton#numButtonDiv:hover,
+QPushButton#numButtonMul:hover,
+QPushButton#numButtonMinus:hover,
+QPushButton#numButtonPlus:hover,
+QPushButton#numButtonSqrt:hover {
+    background: rgba(59, 130, 246, 0.28);
+}
+QPushButton#numButtonSin,
+QPushButton#numButtonCos,
+QPushButton#numButtonTg,
+QPushButton#numButtonCtg,
+QPushButton#numButtonFunc {
+    background: rgba(156, 59, 246, 0.18);
+    color: #bfdbfe;
+}
+QPushButton#numButtonSin:hover,
+QPushButton#numButtonCos:hover,
+QPushButton#numButtonTg:hover,
+QPushButton#numButtonCtg:hover,
+QPushButton#numButtonFunc:hover {
+    background: rgba(156, 59, 246, 0.28);
+}
+QPushButton#numButtonMC,
+QPushButton#numButtonMR,
+QPushButton#numButtonMPlus,
+QPushButton#numButtonMMinus {
+    background: rgba(246, 187, 59, 0.18);
+    color: #bfdbfe;
+}
+QPushButton#numButtonMC:hover,
+QPushButton#numButtonMR:hover,
+QPushButton#numButtonMPlus:hover,
+QPushButton#numButtonMMinus:hover {
+    background: rgba(246, 187, 59, 0.28);
+    color: #bfdbfe;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainVerticalLayout">
+    <property name="spacing">
+     <number>16</number>
+    </property>
+    <property name="leftMargin">
+     <number>20</number>
+    </property>
+    <property name="topMargin">
+     <number>20</number>
+    </property>
+    <property name="rightMargin">
+     <number>20</number>
+    </property>
+    <property name="bottomMargin">
+     <number>20</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>-1</pointsize>
+        <fontweight>DemiBold</fontweight>
+       </font>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="buttonsGridLayout">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="numButton6">
+        <property name="text">
+         <string>6</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="numButtonMul">
+        <property name="text">
+         <string>*</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="numButtonOB">
+        <property name="text">
+         <string>(</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QPushButton" name="numButton0">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="numButtonMC">
+        <property name="text">
+         <string>MC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="numButtonCB">
+        <property name="text">
+         <string>)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="numButtonDel">
+        <property name="text">
+         <string>Del</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="numButton9">
+        <property name="text">
+         <string>9</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="numButtonMMinus">
+        <property name="text">
+         <string>M-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="numButtonMR">
+        <property name="text">
+         <string>MR</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="numButtonDiv">
+        <property name="text">
+         <string>/</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="numButton4">
+        <property name="text">
+         <string>4</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="numButton1">
+        <property name="text">
+         <string>1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="numButtonMPlus">
+        <property name="text">
+         <string>M+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="numButtonC">
+        <property name="text">
+         <string>C</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QPushButton" name="numButtonPlus">
+        <property name="text">
+         <string>+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QPushButton" name="numButton3">
+        <property name="text">
+         <string>3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="numButton5">
+        <property name="text">
+         <string>5</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QPushButton" name="numButtonMinus">
+        <property name="text">
+         <string>-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="numButton2">
+        <property name="text">
+         <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="numButton8">
+        <property name="text">
+         <string>8</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="numButton7">
+        <property name="text">
+         <string>7</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="numButtonSin">
+        <property name="text">
+         <string>sin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QPushButton" name="numButtonCos">
+        <property name="text">
+         <string>cos</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="numButtonTg">
+        <property name="text">
+         <string>tg</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QPushButton" name="numButtonCtg">
+        <property name="text">
+         <string>ctg</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QPushButton" name="numButtonCalc">
+        <property name="text">
+         <string>=</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QPushButton" name="numButtonDot">
+        <property name="text">
+         <string>.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="numButtonSqrt">
+        <property name="text">
+         <string>sqrt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="numButtonFunc">
+        <property name="text">
+         <string>1/x</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>615</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>980</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CSV Metrics Calculator</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainVerticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="topHorizontalLayout">
+      <item>
+       <widget class="QPushButton" name="loadFileButton">
+        <property name="text">
+         <string>Load data</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="filenameLabel">
+        <property name="text">
+         <string>Файл не выбран</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="inputHorizontalLayout">
+      <item>
+       <widget class="QLabel" name="regionLabel">
+        <property name="text">
+         <string>Регион:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="regionInput">
+        <property name="placeholderText">
+         <string>Введите регион</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="numColumnLabel">
+        <property name="text">
+         <string>Номер столбца:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="columnInput">
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>999</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="calculateButton">
+        <property name="text">
+         <string>Calculate metrics</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="chartView"/>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="resultsGroupBox">
+      <property name="title">
+       <string>Результаты</string>
+      </property>
+      <layout class="QGridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="NEminimumLabel">
+         <property name="text">
+          <string>Минимальное значение:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="NEmaximumLabel">
+         <property name="text">
+          <string>Максимальное значение:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="minimumLabel">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="NEmedianLabel">
+         <property name="text">
+          <string>Медиана:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="medianLabel">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="maximumLabel">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

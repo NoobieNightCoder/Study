@@ -1,0 +1,10 @@
+#pragma once
+#include "Division.h"
+#include "Minus.h"
+#include "Multiplie.h"
+#include "Plus.h"
+#include "Sin.h"
+#include "Cos.h"
+#include "Tan.h"
+#include "Cotan.h"
+#include "SquareRoot.h"

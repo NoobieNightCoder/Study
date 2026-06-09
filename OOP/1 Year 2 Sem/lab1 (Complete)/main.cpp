@@ -3,6 +3,7 @@
 #include "UI/ConsoleUi.h"
 #include "UI/InputOutputUI.h"
 
+// Допы: "Выпуклый многоугольник" (не проверен)
 
 int main() {
     InputOutputUI inputOutputUi;

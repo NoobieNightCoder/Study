@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     connect(ui->elevatorCall1Button, &QPushButton::clicked, this, &MainWindow::floorButtonClicked);
     connect(ui->elevatorCall2Button, &QPushButton::clicked, this, &MainWindow::floorButtonClicked);
     connect(ui->elevatorCall3Button, &QPushButton::clicked, this, &MainWindow::floorButtonClicked);
@@ -20,14 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->homeCall4Button, &QPushButton::clicked, this, &MainWindow::floorButtonClicked);
     connect(ui->homeCall5Button, &QPushButton::clicked, this, &MainWindow::floorButtonClicked);
 
-    ui->setupUi(this);
+
+   
 }
 
 void MainWindow::floorButtonClicked() {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     if (button) {
         QString text = button->text();
-        ui->currentFloorLabel->setText(text);
+        ui->currentFloorValueLabel->setText(text);
     }
 }
 

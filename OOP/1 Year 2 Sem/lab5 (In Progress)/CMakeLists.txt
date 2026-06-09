@@ -18,6 +18,13 @@ qt_add_executable(lab5
 
     AppController/AppController.cpp
     AppController/AppController.h
+    
+    Elevator/ElevatorController.cpp
+    Elevator/ElevatorController.h
+    Elevator/Elevator.cpp
+    Elevator/Elevator.h
+    Elevator/Doors.cpp
+    Elevator/Doors.h
 )
 
 target_link_libraries(lab5 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

@@ -61,19 +61,21 @@ def predict_values(model: LinearRegression, array: np.ndarray):
     points = []
 
     print("Введите значение смертности на 1000 чел. (для выхода введите exit)")
-    while True:
+
+    exitFlag = False
+    while not exitFlag:
         text = input("> ").strip().replace(",", ".")
         if text.lower() == "exit":
-            break
-        try:
-            value = float(text)
-        except ValueError:
-            print("Ошибка: Нужно ввести число.")
-            continue
-
-        prediction = model.predict([[value]])[0]
-        points.append((value, prediction))
-        print(f"Предсказанный естественный прирост: {prediction:.2f}")
+            exitFlag = True
+        else:
+            try:
+                value = float(text)
+            except ValueError:
+                print("Ошибка: Нужно ввести число.")
+                continue
+            prediction = model.predict([[value]])[0]
+            points.append((value, prediction))
+            print(f"Предсказанный естественный прирост: {prediction:.2f}")
 
     if points:
         line_x = np.linspace(array[:, 0].min(), array[:, 0].max(), 100).reshape(-1, 1)
